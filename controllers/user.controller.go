@@ -66,7 +66,7 @@ func FindUser(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(200).JSON(fiber.Map{"status": "success", "results": len(user), "user": user})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(user), "user": user})
 }
 
 func UpdateUser(c *fiber.Ctx) error {

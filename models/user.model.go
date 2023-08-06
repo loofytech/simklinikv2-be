@@ -12,8 +12,8 @@ type User struct {
 	Username  string    `gorm:"size:50; not null; unique" json:"username,omitempty"`
 	Email     string    `gorm:"size:50; not null; unique" json:"email,omitempty"`
 	Password  string    `gorm:"size:255; not null" json:"password,omitempty"`
-	CreatedAt time.Time `gorm:"not null" json:"createdAt,omitempty"`
-	UpdatedAt time.Time `gorm:"not null" json:"updatedAt,omitempty"`
+	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
+	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
 }
 
 var validate = validator.New()

@@ -8,6 +8,8 @@ require (
 	github.com/spf13/viper v1.16.0
 )
 
+require google.golang.org/protobuf v1.30.0 // indirect
+
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
@@ -18,6 +20,7 @@ require (
 	github.com/gofiber/fiber v1.14.6 // indirect
 	github.com/gofiber/fiber/v2 v2.48.0 // indirect
 	github.com/gofiber/utils v0.0.10 // indirect
+	github.com/golang/protobuf v1.5.3
 	github.com/gorilla/schema v1.1.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect

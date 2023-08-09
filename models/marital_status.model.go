@@ -11,8 +11,8 @@ type MaritalStatus struct {
 	MaritalName   string    `gorm:"size:50; not null" json:"marital_name,omitempty"`
 	MaritalActive *bool     `gorm:"default:1; not null; unique" json:"marital_active,omitempty"`
 	MaritalSlug   string    `gorm:"size:50; not null; unique" json:"marital_slug,omitempty"`
-	CreatedAt     time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
-	UpdatedAt     time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
+	CreatedAt     time.Time `gorm:"default:null" json:"created_at,omitempty"`
+	UpdatedAt     time.Time `gorm:"default:null" json:"updated_at,omitempty"`
 }
 
 func ValidateStructMarital[T any](payload T) []*ErrorResponse {

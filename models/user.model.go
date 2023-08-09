@@ -15,8 +15,8 @@ type User struct {
 	Email     string    `gorm:"size:50; not null; unique" json:"email,omitempty"`
 	Password  string    `gorm:"size:255; not null" json:"password,omitempty"`
 	RoleId    int64     `gorm:"size:20; foreign_key" json:"role_id,omitempty"`
-	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
-	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
+	CreatedAt time.Time `gorm:"default:null" json:"created_at,omitempty"`
+	UpdatedAt time.Time `gorm:"default:null" json:"updated_at,omitempty"`
 	Role      Role      `gorm:"references:id"`
 }
 

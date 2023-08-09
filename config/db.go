@@ -17,6 +17,7 @@ var DB *gorm.DB
 func ConnectDB(config *ConfigDB) {
 	str := []string{
 		config.DBUserName,
+		":",
 		config.DBUserPassword,
 		"@tcp(",
 		config.DBHost,

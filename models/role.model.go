@@ -11,8 +11,8 @@ type Role struct {
 	RoleName   string    `gorm:"size:50; not null" json:"role_name,omitempty"`
 	RoleStatus *bool     `gorm:"default:1; not null; unique" json:"role_status,omitempty"`
 	RoleSlug   string    `gorm:"size:50; not null; unique" json:"role_slug,omitempty"`
-	CreatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
-	UpdatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
+	CreatedAt  time.Time `gorm:"default:null" json:"created_at,omitempty"`
+	UpdatedAt  time.Time `gorm:"default:null" json:"updated_at,omitempty"`
 }
 
 func ValidateStructRole[T any](payload T) []*ErrorResponse {

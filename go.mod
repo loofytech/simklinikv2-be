@@ -3,15 +3,16 @@ module sim-klinikv2
 go 1.20
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-playground/validator/v10 v10.14.1
+	github.com/gofiber/fiber v1.14.6
 	github.com/spf13/viper v1.16.0
 )
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
-	github.com/gofiber/jwt/v3 v3.3.10 // indirect
-	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
+	github.com/gofiber/utils v0.0.10 // indirect
 	github.com/google/uuid v1.3.0 // indirect
+	github.com/gorilla/schema v1.1.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
 

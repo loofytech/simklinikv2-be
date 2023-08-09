@@ -12,6 +12,7 @@ import (
 type AuthBody struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
+	ID       int64  `json:"id"`
 }
 
 func LoginUser(c *fiber.Ctx) error {
@@ -47,8 +48,20 @@ func LoginUser(c *fiber.Ctx) error {
 
 	// logic jwt
 
+	tokenString, err := utils.GenerateJWT(user.ID, user.Email, user.Username)
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+	}
+
 	return c.Status(200).JSON(fiber.Map{
 		"status": "success",
-		"data":   "login berhasil",
+		"data": fiber.Map{
+			"user": fiber.Map{
+				"id":    user.ID,
+				"name":  user.Name,
+				"email": user.Email,
+			},
+			"token": tokenString,
+		},
 	})
 }

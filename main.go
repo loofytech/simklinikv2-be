@@ -6,6 +6,8 @@ import (
 	"sim-klinikv2/config"
 	"sim-klinikv2/controllers"
 
+	"sim-klinikv2/middleware"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
@@ -31,15 +33,31 @@ func main() {
 	// 	AllowCredentials: true,
 	// }))
 
+	// jwt := middleware.NewAuthMiddleware("supersecretkey")
+
 	micro.Route("/user", func(router fiber.Router) {
-		router.Get("", controllers.FindUser)
+		router.Get("", middleware.Auth, controllers.FindUser)
 		router.Post("/signin", controllers.LoginUser)
 		router.Post("/", controllers.CreateUserHandler)
+		router.Get("/test", middleware.Auth, func(c *fiber.Ctx) error {
+			return c.SendString("hello")
+		})
 	})
 	micro.Route("/user/:userId", func(router fiber.Router) {
 		router.Delete("", controllers.UserDelete)
 		router.Get("", controllers.FindUserById)
 		router.Patch("", controllers.UpdateUser)
+	})
+
+	micro.Route("/role", func(router fiber.Router) {
+		router.Get("", controllers.FindUser)
+		router.Post("/create", controllers.CreateRoleHandler)
+		router.Post("/", controllers.CreateUserHandler)
+	})
+	micro.Route("/role/:roleId", func(router fiber.Router) {
+		router.Delete("", controllers.UserDelete)
+		router.Get("", controllers.FindUserById)
+		router.Patch("", controllers.UpdateRole)
 	})
 
 	// Checker api live

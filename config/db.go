@@ -40,7 +40,7 @@ func ConnectDB(config *ConfigDB) {
 	DB.Logger = logger.Default.LogMode(logger.Info)
 
 	log.Println("Running Migrations")
-	DB.AutoMigrate(&models.User{})
+	DB.AutoMigrate(models.Role{}, &models.User{})
 
 	log.Println("🚀 Connected Successfully to the Database")
 }

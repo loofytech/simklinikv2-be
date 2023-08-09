@@ -4,16 +4,20 @@ import (
 	"time"
 
 	"github.com/go-playground/validator/v10"
+	"gorm.io/gorm"
 )
 
 type User struct {
+	gorm.Model
 	ID        int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	Name      string    `gorm:"size:50; not null" json:"name,omitempty"`
 	Username  string    `gorm:"size:50; not null; unique" json:"username,omitempty"`
 	Email     string    `gorm:"size:50; not null; unique" json:"email,omitempty"`
 	Password  string    `gorm:"size:255; not null" json:"password,omitempty"`
+	RoleId    int64     `gorm:"size:20; foreign_key" json:"role_id,omitempty"`
 	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
 	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
+	Role      Role      `gorm:"references:id"`
 }
 
 var validate = validator.New()
@@ -44,11 +48,13 @@ type CreateUserSchema struct {
 	Username string `json:"username" validate:"required"`
 	Email    string `json:"email,omitempty"`
 	Password string `json:"password,omitempty"`
+	RoleId   int64  `json:"role_id,omitempty"`
 }
 
 type UpdateUserSchema struct {
-	Name     string  `json:"name,omitempty"`
-	Username string  `json:"username,omitempty"`
-	Email    string  `json:"email,omitempty"`
-	Password *string `json:"password,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Username string `json:"username,omitempty"`
+	Email    string `json:"email,omitempty"`
+	Password string `json:"password,omitempty"`
+	RoleId   int64  `json:"role_id,omitempty"`
 }

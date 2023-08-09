@@ -34,6 +34,7 @@ func CreateUserHandler(c *fiber.Ctx) error {
 		Username:  payload.Username,
 		Email:     payload.Email,
 		Password:  password,
+		RoleId:    payload.RoleId,
 		CreatedAt: now,
 		UpdatedAt: now,
 	}
@@ -98,9 +99,13 @@ func UpdateUser(c *fiber.Ctx) error {
 		updates["email"] = payload.Email
 	}
 
-	if payload.Password != nil {
-		updates["password"] = payload.Password
+	password, _ := utils.HashPassword(payload.Password)
+	if payload.Password != "" {
+		updates["password"] = password
 	}
+	// if payload.RoleId := "" {
+	// 	updates["role_id"] = payload.RoleId
+	// }
 
 	updates["updated_at"] = time.Now()
 

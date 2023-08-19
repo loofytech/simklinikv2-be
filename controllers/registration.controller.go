@@ -15,10 +15,12 @@ import (
 
 func CreateRegistrationHandler(c *fiber.Ctx) error {
 	var dumpPatientId int64
+	var dumpRegId int64
 
 	var patient models.Patient
 	var ppx *models.CreatePatientSchema
 	var mmx *models.UpdatePatientSchema
+	var sAct *models.ServiceAction
 	now := time.Now()
 
 	payload := struct {
@@ -60,7 +62,7 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 		updates["patient_gender"] = mmx.PatientGender
 		updates["patient_blood_type"] = mmx.PatientBloodType
 		updates["birth_place"] = mmx.BirthPlace
-		updates["birth_date"] = mmx.BirthPlace
+		updates["birth_date"] = mmx.BirthDate
 		updates["province"] = mmx.Province
 		updates["regency"] = mmx.Regency
 		updates["district"] = mmx.District
@@ -143,6 +145,34 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusConflict).JSON(fiber.Map{"status": "fail", "message": "Patient already exist"})
 	} else if newReg.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": newReg.Error.Error()})
+	}
+
+	dumpRegIds := &dumpRegId
+	*dumpRegIds = int64(newRegistration.ID)
+
+	if err := c.BodyParser(&sAct); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+	}
+
+	errors := models.ValidateStruct(sAct)
+	if errors != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(errors)
+	}
+
+	newSAct := models.ServiceAction{
+		UnitId:         sAct.UnitId,
+		UserId:         sAct.UserId,
+		RegistrationId: dumpRegId,
+		CreatedAt:      now,
+		UpdatedAt:      now,
+	}
+
+	newServiceAction := config.DB.Create(&newSAct)
+
+	if newServiceAction.Error != nil && strings.Contains(newServiceAction.Error.Error(), "duplicate key value violates unique") {
+		return c.Status(fiber.StatusConflict).JSON(fiber.Map{"status": "fail", "message": "Patient already exist"})
+	} else if newServiceAction.Error != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": newServiceAction.Error.Error()})
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{

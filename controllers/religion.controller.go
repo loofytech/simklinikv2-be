@@ -26,11 +26,10 @@ func CreateReligionHandler(c *fiber.Ctx) error {
 
 	now := time.Now()
 	newReligion := models.Religion{
-		ReligionName:   payload.ReligionName,
-		ReligionActive: payload.ReligionActive,
-		ReligionSlug:   payload.ReligionSlug,
-		CreatedAt:      now,
-		UpdatedAt:      now,
+		ReligionName: payload.ReligionName,
+		ReligionSlug: payload.ReligionSlug,
+		CreatedAt:    now,
+		UpdatedAt:    now,
 	}
 
 	result := config.DB.Create(&newReligion)
@@ -87,9 +86,9 @@ func UpdateReligion(c *fiber.Ctx) error {
 		updates["Religion_name"] = payload.ReligionName
 	}
 
-	if payload.ReligionActive != nil {
-		updates["Religion_active"] = payload.ReligionActive
-	}
+	// if payload.ReligionActive != nil {
+	// 	updates["Religion_active"] = payload.ReligionActive
+	// }
 
 	updates["updated_at"] = time.Now()
 

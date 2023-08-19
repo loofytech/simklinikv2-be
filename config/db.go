@@ -17,6 +17,7 @@ var DB *gorm.DB
 func ConnectDB(config *ConfigDB) {
 	str := []string{
 		config.DBUserName,
+		":",
 		config.DBUserPassword,
 		"@tcp(",
 		config.DBHost,
@@ -40,12 +41,21 @@ func ConnectDB(config *ConfigDB) {
 	DB.Logger = logger.Default.LogMode(logger.Info)
 
 	log.Println("Running Migrations")
-	DB.AutoMigrate(models.Role{},
+	DB.AutoMigrate(
+		&models.Role{},
 		&models.User{},
 		&models.Education{},
 		&models.Job{},
 		&models.MaritalStatus{},
 		&models.Ethnic{},
+		&models.Service{},
+		&models.RelationAgency{},
+		&models.InsuranceProduct{},
+		&models.Patient{},
+		&models.Religion{},
+		&models.Unit{},
+		&models.Registration{},
+		&models.ServiceAction{},
 	)
 
 	log.Println("🚀 Connected Successfully to the Database")

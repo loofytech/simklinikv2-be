@@ -11,8 +11,8 @@ type Ethnic struct {
 	EthnicName   string    `gorm:"size:50; not null" json:"ethnic_name,omitempty"`
 	EthnicActive *bool     `gorm:"default:1; not null; unique" json:"ethnic_active,omitempty"`
 	EthnicSlug   string    `gorm:"size:50; not null; unique" json:"ethnic_slug,omitempty"`
-	CreatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
-	UpdatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
+	CreatedAt    time.Time `gorm:"" json:"created_at,omitempty"`
+	UpdatedAt    time.Time `gorm:"" json:"updated_at,omitempty"`
 }
 
 func ValidateStructEthnic[T any](payload T) []*ErrorResponse {

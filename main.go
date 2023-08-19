@@ -13,6 +13,13 @@ func init() {
 		log.Fatalln("Failed to load environment variables! \n", err.Error())
 	}
 	config.ConnectDB(&cfs)
+
+	// var patient *models.Patient
+	// var count int64
+	// config.DB.Find(&patient).Count(&count)
+	// // mr := strings.Join([]string{"A", fmt.Sprintf("%06d", record.RowsAffected+1)}, "")
+	// // fmt.Print(mr)
+	// fmt.Print(count)
 }
 
 func main() {

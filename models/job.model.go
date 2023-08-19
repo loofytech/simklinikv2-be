@@ -11,8 +11,8 @@ type Job struct {
 	JobName   string    `gorm:"size:50; not null" json:"job_name,omitempty"`
 	JobActive *bool     `gorm:"default:1; not null; unique" json:"job_active,omitempty"`
 	JobSlug   string    `gorm:"size:50; not null; unique" json:"job_slug,omitempty"`
-	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
-	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at,omitempty"`
+	CreatedAt time.Time `gorm:"" json:"created_at,omitempty"`
+	UpdatedAt time.Time `gorm:"" json:"updated_at,omitempty"`
 }
 
 func ValidateStructJob[T any](payload T) []*ErrorResponse {

@@ -26,11 +26,10 @@ func CreateEthnicHandler(c *fiber.Ctx) error {
 
 	now := time.Now()
 	newEthnic := models.Ethnic{
-		EthnicName:   payload.EthnicName,
-		EthnicActive: payload.EthnicActive,
-		EthnicSlug:   payload.EthnicSlug,
-		CreatedAt:    now,
-		UpdatedAt:    now,
+		EthnicName: payload.EthnicName,
+		EthnicSlug: payload.EthnicSlug,
+		CreatedAt:  now,
+		UpdatedAt:  now,
 	}
 
 	result := config.DB.Create(&newEthnic)
@@ -43,7 +42,7 @@ func CreateEthnicHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"Ethnic": newEthnic},
+		"data":   newEthnic,
 	})
 }
 
@@ -61,7 +60,7 @@ func FindEthnic(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(ethnic), "user": ethnic})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(ethnic), "data": ethnic})
 }
 
 func UpdateEthnic(c *fiber.Ctx) error {
@@ -86,9 +85,9 @@ func UpdateEthnic(c *fiber.Ctx) error {
 	if payload.EthnicName != "" {
 		updates["ethnic_name"] = payload.EthnicName
 	}
-	if payload.EthnicActive != nil {
-		updates["ethnic_active"] = payload.EthnicActive
-	}
+	// if payload.EthnicActive != nil {
+	// 	updates["ethnic_active"] = payload.EthnicActive
+	// }
 
 	updates["updated_at"] = time.Now()
 

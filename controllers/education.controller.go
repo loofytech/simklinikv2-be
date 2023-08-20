@@ -26,11 +26,10 @@ func CreateEducationHandler(c *fiber.Ctx) error {
 
 	now := time.Now()
 	newEducation := models.Education{
-		EducationName:   payload.EducationName,
-		EducationActive: payload.EducationActive,
-		EducationSlug:   payload.EducationSlug,
-		CreatedAt:       now,
-		UpdatedAt:       now,
+		EducationName: payload.EducationName,
+		EducationSlug: payload.EducationSlug,
+		CreatedAt:     now,
+		UpdatedAt:     now,
 	}
 
 	result := config.DB.Create(&newEducation)
@@ -43,7 +42,7 @@ func CreateEducationHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"Education": newEducation},
+		"data":   newEducation,
 	})
 }
 
@@ -61,7 +60,7 @@ func FindEducation(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(education), "user": education})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(education), "data": education})
 }
 
 func UpdateEducation(c *fiber.Ctx) error {
@@ -86,9 +85,9 @@ func UpdateEducation(c *fiber.Ctx) error {
 	if payload.EducationName != "" {
 		updates["education_name"] = payload.EducationName
 	}
-	if payload.EducationActive != nil {
-		updates["education_active"] = payload.EducationActive
-	}
+	// if payload.EducationActive != nil {
+	// 	updates["education_active"] = payload.EducationActive
+	// }
 
 	updates["updated_at"] = time.Now()
 

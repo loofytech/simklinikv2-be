@@ -26,11 +26,10 @@ func CreateMaritalStatusHandler(c *fiber.Ctx) error {
 
 	now := time.Now()
 	newMaritalStatus := models.MaritalStatus{
-		MaritalName:   payload.MaritalName,
-		MaritalActive: payload.MaritalActive,
-		MaritalSlug:   payload.MaritalSlug,
-		CreatedAt:     now,
-		UpdatedAt:     now,
+		MaritalName: payload.MaritalName,
+		MaritalSlug: payload.MaritalSlug,
+		CreatedAt:   now,
+		UpdatedAt:   now,
 	}
 
 	result := config.DB.Create(&newMaritalStatus)
@@ -43,7 +42,7 @@ func CreateMaritalStatusHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"MaritalStatus": newMaritalStatus},
+		"data":   newMaritalStatus,
 	})
 }
 
@@ -61,7 +60,7 @@ func FindMaritalStatus(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(maritalStatus), "user": maritalStatus})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(maritalStatus), "data": maritalStatus})
 }
 
 func UpdateMaritalStatus(c *fiber.Ctx) error {
@@ -86,9 +85,9 @@ func UpdateMaritalStatus(c *fiber.Ctx) error {
 	if payload.MaritalName != "" {
 		updates["marital_name"] = payload.MaritalName
 	}
-	if payload.MaritalActive != nil {
-		updates["marital_active"] = payload.MaritalActive
-	}
+	// if payload.MaritalActive != nil {
+	// 	updates["marital_active"] = payload.MaritalActive
+	// }
 
 	updates["updated_at"] = time.Now()
 

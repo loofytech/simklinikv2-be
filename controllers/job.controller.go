@@ -27,7 +27,6 @@ func CreateJobHandler(c *fiber.Ctx) error {
 	now := time.Now()
 	newJob := models.Job{
 		JobName:   payload.JobName,
-		JobActive: payload.JobActive,
 		JobSlug:   payload.JobSlug,
 		CreatedAt: now,
 		UpdatedAt: now,
@@ -43,7 +42,7 @@ func CreateJobHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"Job": newJob},
+		"data":   newJob,
 	})
 }
 
@@ -61,7 +60,7 @@ func FindJob(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(job), "user": job})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(job), "data": job})
 }
 
 func UpdateJob(c *fiber.Ctx) error {
@@ -86,9 +85,9 @@ func UpdateJob(c *fiber.Ctx) error {
 	if payload.JobName != "" {
 		updates["job_name"] = payload.JobName
 	}
-	if payload.JobActive != nil {
-		updates["job_active"] = payload.JobActive
-	}
+	// if payload.JobActive != nil {
+	// 	updates["job_active"] = payload.JobActive
+	// }
 
 	updates["updated_at"] = time.Now()
 

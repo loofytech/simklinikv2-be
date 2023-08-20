@@ -9,7 +9,7 @@ import (
 type Education struct {
 	ID              int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	EducationName   string    `gorm:"size:50; not null" json:"education_name,omitempty"`
-	EducationActive *bool     `gorm:"default:1; not null; unique" json:"education_active,omitempty"`
+	EducationActive *bool     `gorm:"default:1; not null;" json:"education_active,omitempty"`
 	EducationSlug   string    `gorm:"size:50; not null; unique" json:"education_slug,omitempty"`
 	CreatedAt       time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt       time.Time `gorm:"" json:"updated_at,omitempty"`
@@ -31,13 +31,11 @@ func ValidateStructEducation[T any](payload T) []*ErrorResponse {
 }
 
 type CreateEducationSchema struct {
-	EducationName   string `json:"education_name" validate:"required"`
-	EducationActive *bool  `json:"education_active" validate:"required"`
-	EducationSlug   string `json:"education_slug,omitempty"`
+	EducationName string `json:"education_name" validate:"required"`
+	EducationSlug string `json:"education_slug,omitempty"`
 }
 
 type UpdateEducationSchema struct {
-	EducationName   string `json:"education_name,omitempty"`
-	EducationActive *bool  `json:"education_active,omitempty"`
-	EducationSlug   string `json:"education_slug,omitempty"`
+	EducationName string `json:"education_name,omitempty"`
+	EducationSlug string `json:"education_slug,omitempty"`
 }

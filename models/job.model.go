@@ -9,7 +9,7 @@ import (
 type Job struct {
 	ID        int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	JobName   string    `gorm:"size:50; not null" json:"job_name,omitempty"`
-	JobActive *bool     `gorm:"default:1; not null; unique" json:"job_active,omitempty"`
+	JobActive *bool     `gorm:"default:1; not null;" json:"job_active,omitempty"`
 	JobSlug   string    `gorm:"size:50; not null; unique" json:"job_slug,omitempty"`
 	CreatedAt time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt time.Time `gorm:"" json:"updated_at,omitempty"`
@@ -31,13 +31,11 @@ func ValidateStructJob[T any](payload T) []*ErrorResponse {
 }
 
 type CreateJobSchema struct {
-	JobName   string `json:"job_name" validate:"required"`
-	JobActive *bool  `json:"job_active" validate:"required"`
-	JobSlug   string `json:"job_slug,omitempty"`
+	JobName string `json:"job_name" validate:"required"`
+	JobSlug string `json:"job_slug,omitempty"`
 }
 
 type UpdateJobSchema struct {
-	JobName   string `json:"job_name,omitempty"`
-	JobActive *bool  `json:"job_active,omitempty"`
-	JobSlug   string `json:"job_slug,omitempty"`
+	JobName string `json:"job_name,omitempty"`
+	JobSlug string `json:"job_slug,omitempty"`
 }

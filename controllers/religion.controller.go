@@ -42,7 +42,7 @@ func CreateReligionHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"Religion": newReligion},
+		"data":   newReligion,
 	})
 }
 
@@ -60,7 +60,7 @@ func FindReligion(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(religion), "user": religion})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(religion), "data": religion})
 }
 
 func UpdateReligion(c *fiber.Ctx) error {
@@ -94,7 +94,7 @@ func UpdateReligion(c *fiber.Ctx) error {
 
 	config.DB.Model(&religion).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": religion}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": religion})
 }
 
 func FindReligionById(c *fiber.Ctx) error {

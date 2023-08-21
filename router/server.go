@@ -18,7 +18,7 @@ func Server() {
 		router.Post("/signin", controllers.LoginUser)
 	})
 
-	micro.Group("/user", middleware.Auth)
+	// micro.Group("/user", middleware.Auth)
 	micro.Group("/user", middleware.CheckUserRoleAdmin)
 	micro.Route("/user", func(router fiber.Router) {
 		router.Get("", controllers.FindUser)

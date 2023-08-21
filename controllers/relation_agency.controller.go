@@ -109,7 +109,7 @@ func UpdateRelationAgency(c *fiber.Ctx) error {
 
 	config.DB.Model(&relationAgency).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": relationAgency}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": relationAgency}})
 }
 
 func FindRelationAgencyById(c *fiber.Ctx) error {
@@ -124,7 +124,7 @@ func FindRelationAgencyById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": relationAgency}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": relationAgency}})
 }
 
 func RelationAgencyDelete(c *fiber.Ctx) error {

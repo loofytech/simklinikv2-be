@@ -109,7 +109,7 @@ func UpdateInsuranceProduct(c *fiber.Ctx) error {
 
 	config.DB.Model(&insuranceProduct).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": insuranceProduct}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": insuranceProduct}})
 }
 
 func FindInsuranceProductById(c *fiber.Ctx) error {
@@ -124,7 +124,7 @@ func FindInsuranceProductById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": insuranceProduct}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": insuranceProduct}})
 }
 
 func InsuranceProductDelete(c *fiber.Ctx) error {

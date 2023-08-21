@@ -93,7 +93,7 @@ func UpdateEthnic(c *fiber.Ctx) error {
 
 	config.DB.Model(&ethnic).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": ethnic}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": ethnic}})
 }
 
 func FindEthnicById(c *fiber.Ctx) error {
@@ -108,7 +108,7 @@ func FindEthnicById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": ethnic}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": ethnic}})
 }
 
 func EthnicDelete(c *fiber.Ctx) error {

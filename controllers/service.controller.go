@@ -26,11 +26,10 @@ func CreateServiceHandler(c *fiber.Ctx) error {
 
 	now := time.Now()
 	newService := models.Service{
-		ServiceName:   payload.ServiceName,
-		ServiceActive: payload.ServiceActive,
-		ServiceSlug:   payload.ServiceSlug,
-		CreatedAt:     now,
-		UpdatedAt:     now,
+		ServiceName: payload.ServiceName,
+		ServiceSlug: payload.ServiceSlug,
+		CreatedAt:   now,
+		UpdatedAt:   now,
 	}
 
 	result := config.DB.Create(&newService)
@@ -61,7 +60,7 @@ func FindService(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(service), "user": service})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(service), "service": service})
 }
 
 func UpdateService(c *fiber.Ctx) error {
@@ -87,15 +86,15 @@ func UpdateService(c *fiber.Ctx) error {
 		updates["service_name"] = payload.ServiceName
 	}
 
-	if payload.ServiceActive != nil {
-		updates["service_active"] = payload.ServiceActive
-	}
+	// if payload.ServiceActive != nil {
+	// 	updates["service_active"] = payload.ServiceActive
+	// }
 
 	updates["updated_at"] = time.Now()
 
 	config.DB.Model(&service).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": service}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"service": service}})
 }
 
 func FindServiceById(c *fiber.Ctx) error {
@@ -110,7 +109,7 @@ func FindServiceById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": service}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"service": service}})
 }
 
 func ServiceDelete(c *fiber.Ctx) error {

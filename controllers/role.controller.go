@@ -61,7 +61,7 @@ func FindRole(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(role), "user": role})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(role), "data": role})
 }
 
 func UpdateRole(c *fiber.Ctx) error {
@@ -94,7 +94,7 @@ func UpdateRole(c *fiber.Ctx) error {
 
 	config.DB.Model(&role).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": role}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": role}})
 }
 
 func FindRoleById(c *fiber.Ctx) error {
@@ -109,7 +109,7 @@ func FindRoleById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": role}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": role}})
 }
 
 func RoleDelete(c *fiber.Ctx) error {

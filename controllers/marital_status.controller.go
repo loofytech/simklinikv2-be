@@ -93,7 +93,7 @@ func UpdateMaritalStatus(c *fiber.Ctx) error {
 
 	config.DB.Model(&maritalStatus).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": maritalStatus}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": maritalStatus}})
 }
 
 func FindMaritalStatusById(c *fiber.Ctx) error {
@@ -108,7 +108,7 @@ func FindMaritalStatusById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": maritalStatus}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": maritalStatus}})
 }
 
 func MaritalStatusDelete(c *fiber.Ctx) error {

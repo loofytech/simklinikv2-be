@@ -93,7 +93,7 @@ func UpdateJob(c *fiber.Ctx) error {
 
 	config.DB.Model(&job).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": job}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": job}})
 }
 
 func FindJobById(c *fiber.Ctx) error {
@@ -108,7 +108,7 @@ func FindJobById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": job}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": job}})
 }
 
 func JobDelete(c *fiber.Ctx) error {

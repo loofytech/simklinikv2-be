@@ -174,5 +174,16 @@ func Server() {
 		router.Patch("", controllers.UpdateServiceAction)
 	})
 
+	micro.Route("/payment", func(router fiber.Router) {
+		router.Get("", controllers.FindPayment)
+		router.Post("/create", controllers.CreatePaymentHandler)
+		router.Post("/", controllers.CreatePaymentHandler)
+	})
+	micro.Route("/payment/:paymentId", func(router fiber.Router) {
+		router.Delete("", controllers.PaymentDelete)
+		router.Get("", controllers.FindPaymentById)
+		router.Patch("", controllers.UpdatePayment)
+	})
+
 	log.Fatal(app.Listen(":8000"))
 }

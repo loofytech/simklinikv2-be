@@ -35,7 +35,7 @@ func ValidateStructServiceAction[T any](payload T) []*ErrorResponse {
 
 type CreateServiceActionSchema struct {
 	UnitId         int64 `gorm:"unit_id" validate:"required"`
-	RegistrationId int64 `gorm:"registration" validate:"required"`
+	RegistrationId int64 `gorm:"registration_id" validate:"required"`
 	UserId         int64 `gorm:"user_id" validate:"required"`
 }
 

@@ -9,7 +9,7 @@ import (
 type Service struct {
 	ID            int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	ServiceName   string    `gorm:"size:50; not null" json:"service_name,omitempty"`
-	ServiceActive *bool     `gorm:"default:1; not null; unique" json:"service_active,omitempty"`
+	ServiceActive *bool     `gorm:"default:1; not null" json:"service_active,omitempty"`
 	ServiceSlug   string    `gorm:"size:50; not null; unique" json:"service_slug,omitempty"`
 	CreatedAt     time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt     time.Time `gorm:"" json:"updated_at,omitempty"`
@@ -31,13 +31,11 @@ func ValidateStructService[T any](payload T) []*ErrorResponse {
 }
 
 type CreateServiceSchema struct {
-	ServiceName   string `json:"service_name" validate:"required"`
-	ServiceActive *bool  `json:"service_active" validate:"required"`
-	ServiceSlug   string `json:"service_slug,omitempty"`
+	ServiceName string `json:"service_name" validate:"required"`
+	ServiceSlug string `json:"service_slug,omitempty"`
 }
 
 type UpdateServiceSchema struct {
-	ServiceName   string `json:"service_name,omitempty"`
-	ServiceActive *bool  `json:"service_active,omitempty"`
-	ServiceSlug   string `json:"service_slug,omitempty"`
+	ServiceName string `json:"service_name,omitempty"`
+	ServiceSlug string `json:"service_slug,omitempty"`
 }

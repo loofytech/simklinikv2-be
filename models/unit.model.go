@@ -34,7 +34,7 @@ func ValidateStructUnit[T any](payload T) []*ErrorResponse {
 
 type CreateUnitSchema struct {
 	UnitName   string `json:"unit_name" validate:"required"`
-	UnitStatus *bool  `json:"unit_status" validate:"required"`
+	UnitStatus *bool  `json:"unit_status,omitempty"`
 	UnitSlug   string `json:"unit_slug,omitempty"`
 	UserId     int64  `json:"user_id" validate:"required"`
 }

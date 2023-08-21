@@ -160,7 +160,7 @@ func UpdatePatient(c *fiber.Ctx) error {
 
 	config.DB.Model(&patient).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": patient}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": patient}})
 }
 
 func FindPatientById(c *fiber.Ctx) error {
@@ -175,7 +175,7 @@ func FindPatientById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"patient": patient}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": patient}})
 }
 
 func PatientDelete(c *fiber.Ctx) error {

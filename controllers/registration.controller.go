@@ -196,7 +196,7 @@ func FindRegistration(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(registration), "user": registration})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(registration), "data": registration})
 }
 
 func UpdateRegistration(c *fiber.Ctx) error {
@@ -238,7 +238,7 @@ func FindRegistrationById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"user": registration}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": registration}})
 }
 
 func RegistrationDelete(c *fiber.Ctx) error {

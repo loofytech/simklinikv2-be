@@ -9,7 +9,7 @@ import (
 type Job struct {
 	ID        int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	JobName   string    `gorm:"size:50; not null" json:"job_name,omitempty"`
-	JobActive *bool     `gorm:"default:1; not null;" json:"job_active,omitempty"`
+	JobStatus *bool     `gorm:"default:1; not null;" json:"job_status,omitempty"`
 	JobSlug   string    `gorm:"size:50; not null; unique" json:"job_slug,omitempty"`
 	CreatedAt time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt time.Time `gorm:"" json:"updated_at,omitempty"`

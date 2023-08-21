@@ -27,7 +27,7 @@ func CreatePaymentHandler(c *fiber.Ctx) error {
 	now := time.Now()
 	newPayment := models.Payment{
 		PaymentName:   payload.PaymentName,
-		PaymentActive: payload.PaymentActive,
+		PaymentStatus: payload.PaymentStatus,
 		PaymentSlug:   payload.PaymentSlug,
 		CreatedAt:     now,
 		UpdatedAt:     now,
@@ -87,8 +87,8 @@ func UpdatePayment(c *fiber.Ctx) error {
 		updates["payment_name"] = payload.PaymentName
 	}
 
-	if payload.PaymentActive != nil {
-		updates["payment_active"] = payload.PaymentActive
+	if payload.PaymentStatus != nil {
+		updates["payment_active"] = payload.PaymentStatus
 	}
 
 	updates["updated_at"] = time.Now()

@@ -9,8 +9,8 @@ import (
 type Payment struct {
 	ID            int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	PaymentName   string    `gorm:"size:50; not null" json:"payment_name,omitempty"`
-	PaymentActive *bool     `gorm:"default:1; not null; unique" json:"payment_active,omitempty"`
-	PaymentSlug   string    `gorm:"size:50; not null" json:"payment_slug,omitempty"`
+	PaymentStatus *bool     `gorm:"default:1; not null" json:"payment_status,omitempty"`
+	PaymentSlug   string    `gorm:"size:50; not null; unique" json:"payment_slug,omitempty"`
 	CreatedAt     time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt     time.Time `gorm:"" json:"updated_at,omitempty"`
 }
@@ -32,12 +32,12 @@ func ValidateStructPayment[T any](payload T) []*ErrorResponse {
 
 type CreatePaymentSchema struct {
 	PaymentName   string `json:"payment_name" validate:"required"`
-	PaymentActive *bool  `json:"payment_active,omitempty"`
+	PaymentStatus *bool  `json:"payment_status,omitempty"`
 	PaymentSlug   string `json:"payment_slug,omitempty"`
 }
 
 type UpdatePaymentSchema struct {
 	PaymentName   string `json:"payment_name,omitempty"`
-	PaymentActive *bool  `json:"payment_active,omitempty"`
+	PaymentStatus *bool  `json:"payment_status,omitempty"`
 	PaymentSlug   string `json:"payment_slug,omitempty"`
 }

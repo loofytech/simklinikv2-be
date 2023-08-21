@@ -9,7 +9,7 @@ import (
 type MaritalStatus struct {
 	ID            int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	MaritalName   string    `gorm:"size:50; not null" json:"marital_name,omitempty"`
-	MaritalActive *bool     `gorm:"default:1; not null;" json:"marital_active,omitempty"`
+	MaritalStatus *bool     `gorm:"default:1; not null;" json:"marital_status,omitempty"`
 	MaritalSlug   string    `gorm:"size:50; not null; unique" json:"marital_slug,omitempty"`
 	CreatedAt     time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt     time.Time `gorm:"" json:"updated_at,omitempty"`

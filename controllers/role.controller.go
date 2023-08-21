@@ -26,11 +26,10 @@ func CreateRoleHandler(c *fiber.Ctx) error {
 
 	now := time.Now()
 	newRole := models.Role{
-		RoleName:   payload.RoleName,
-		RoleStatus: payload.RoleStatus,
-		RoleSlug:   payload.RoleSlug,
-		CreatedAt:  now,
-		UpdatedAt:  now,
+		RoleName:  payload.RoleName,
+		RoleSlug:  payload.RoleSlug,
+		CreatedAt: now,
+		UpdatedAt: now,
 	}
 
 	result := config.DB.Create(&newRole)

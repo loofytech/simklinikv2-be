@@ -9,7 +9,7 @@ import (
 type Education struct {
 	ID              int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	EducationName   string    `gorm:"size:50; not null" json:"education_name,omitempty"`
-	EducationActive *bool     `gorm:"default:1; not null;" json:"education_active,omitempty"`
+	EducationStatus *bool     `gorm:"default:1; not null;" json:"education_status,omitempty"`
 	EducationSlug   string    `gorm:"size:50; not null; unique" json:"education_slug,omitempty"`
 	CreatedAt       time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt       time.Time `gorm:"" json:"updated_at,omitempty"`

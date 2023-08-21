@@ -9,7 +9,7 @@ import (
 type Service struct {
 	ID            int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	ServiceName   string    `gorm:"size:50; not null" json:"service_name,omitempty"`
-	ServiceActive *bool     `gorm:"default:1; not null" json:"service_active,omitempty"`
+	ServiceStatus *bool     `gorm:"default:1; not null" json:"service_status,omitempty"`
 	ServiceSlug   string    `gorm:"size:50; not null; unique" json:"service_slug,omitempty"`
 	CreatedAt     time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt     time.Time `gorm:"" json:"updated_at,omitempty"`

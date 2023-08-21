@@ -9,7 +9,7 @@ import (
 type Role struct {
 	ID         int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	RoleName   string    `gorm:"size:50; not null" json:"role_name,omitempty"`
-	RoleStatus *bool     `gorm:"default:1; not null; unique" json:"role_status,omitempty"`
+	RoleStatus *bool     `gorm:"default:1; not null" json:"role_status,omitempty"`
 	RoleSlug   string    `gorm:"size:50; not null; unique" json:"role_slug,omitempty"`
 	CreatedAt  time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt  time.Time `gorm:"" json:"updated_at,omitempty"`
@@ -31,13 +31,11 @@ func ValidateStructRole[T any](payload T) []*ErrorResponse {
 }
 
 type CreateRoleSchema struct {
-	RoleName   string `json:"role_name" validate:"required"`
-	RoleStatus *bool  `json:"role_status" validate:"required"`
-	RoleSlug   string `json:"role_slug,omitempty"`
+	RoleName string `json:"role_name" validate:"required"`
+	RoleSlug string `json:"role_slug,omitempty"`
 }
 
 type UpdateRoleSchema struct {
-	RoleName   string `json:"role_name,omitempty"`
-	RoleStatus int    `json:"role_status,omitempty"`
-	RoleSlug   string `json:"role_slug,omitempty"`
+	RoleName string `json:"role_name,omitempty"`
+	RoleSlug string `json:"role_slug,omitempty"`
 }

@@ -9,7 +9,7 @@ import (
 type Ethnic struct {
 	ID           int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	EthnicName   string    `gorm:"size:50; not null" json:"ethnic_name,omitempty"`
-	EthnicActive *bool     `gorm:"default:1; not null" json:"ethnic_active,omitempty"`
+	EthnicStatus *bool     `gorm:"default:1; not null" json:"ethnic_status,omitempty"`
 	EthnicSlug   string    `gorm:"size:50; not null; unique" json:"ethnic_slug,omitempty"`
 	CreatedAt    time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt    time.Time `gorm:"" json:"updated_at,omitempty"`

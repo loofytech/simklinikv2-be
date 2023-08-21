@@ -42,7 +42,7 @@ func CreateServiceHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"Service": newService},
+		"data":   newService,
 	})
 }
 
@@ -60,7 +60,7 @@ func FindService(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(service), "service": service})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(service), "data": service})
 }
 
 func UpdateService(c *fiber.Ctx) error {

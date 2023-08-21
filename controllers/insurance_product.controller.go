@@ -45,7 +45,7 @@ func CreateInsuranceProductHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"InsuranceProduct": newInsuranceProduct},
+		"data":   newInsuranceProduct,
 	})
 }
 
@@ -63,7 +63,7 @@ func FindInsuranceProduct(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(insuranceProduct), "user": insuranceProduct})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(insuranceProduct), "data": insuranceProduct})
 }
 
 func UpdateInsuranceProduct(c *fiber.Ctx) error {

@@ -1,25 +1,14 @@
 package middleware
 
 import (
+	"fmt"
 	"sim-klinikv2/utils"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-// type AuthMidlleware() fiber.Handler {
-// 	return func(c fiber.Ctx) error {
-// 		tokenString := c.GetRespHeader("Authorization")
-// 		if tokenString == "" {
-// 			c.Status(401).JSON(fiber.Map{"error": "request tidak berisi akses token"})
-// 		}
-// 	}
-// }
-// func NewAuthMiddleware(secret string) fiber.Handler {
-// 	return jwtware.New(jwtware.Config{
-// 		SigningKey: []byte(secret),
-// 	})
-// }
+// type user interface{}
 
 func Auth(c *fiber.Ctx) error {
 	tokenString := c.Get("Authorization")
@@ -32,17 +21,26 @@ func Auth(c *fiber.Ctx) error {
 	token := strings.Split(tokenString, " ")[1]
 
 	_, err := utils.ValidateToken(token)
-	// claims, err :=utils.DecodeToken()
 	if err != nil {
 		return c.Status(401).JSON(fiber.Map{
 			"message": "Unauthenticated 2",
 		})
 	}
 
-	// decodeToken, err := utils.DecodeToken(token)
+	decodeToken, err := utils.DecodeToken(token)
+	if err != nil {
+		return c.Status(401).JSON(fiber.Map{
+			"message": "Unauthenticated 2",
+		})
+	}
+	c.Locals("userInfo", decodeToken)
 
-	// c.Locals("userInfo", claims)
-	// c.Locals("role", claims)
+	return c.Next()
+}
+
+func CheckUserRoleAdmin(c *fiber.Ctx) error {
+	info := c.Locals("userInfo")
+	fmt.Print(info)
 
 	return c.Next()
 }

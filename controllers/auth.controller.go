@@ -47,8 +47,7 @@ func LoginUser(c *fiber.Ctx) error {
 	}
 
 	// logic jwt
-
-	tokenString, err := utils.GenerateJWT(user.ID, user.Email, user.Username)
+	tokenString, err := utils.GenerateJWT(user.ID, user.Email, user.Username, user.RoleId)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}

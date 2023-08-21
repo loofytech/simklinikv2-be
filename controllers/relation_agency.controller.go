@@ -45,7 +45,7 @@ func CreateRelationAgencyHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"RelationAgency": newRelationAgency},
+		"data":   newRelationAgency,
 	})
 }
 
@@ -63,7 +63,7 @@ func FindRelationAgency(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(relationAgency), "user": relationAgency})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(relationAgency), "data": relationAgency})
 }
 
 func UpdateRelationAgency(c *fiber.Ctx) error {

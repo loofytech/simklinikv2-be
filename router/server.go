@@ -14,9 +14,14 @@ func Server() {
 
 	app.Mount("/api", micro)
 
-	micro.Route("/user", func(router fiber.Router) {
-		router.Get("", middleware.Auth, controllers.FindUser)
+	micro.Route("/auth", func(router fiber.Router) {
 		router.Post("/signin", controllers.LoginUser)
+	})
+
+	micro.Group("/user", middleware.Auth)
+	micro.Group("/user", middleware.CheckUserRoleAdmin)
+	micro.Route("/user", func(router fiber.Router) {
+		router.Get("", controllers.FindUser)
 		router.Post("/", controllers.CreateUserHandler)
 	})
 
@@ -92,23 +97,23 @@ func Server() {
 		router.Patch("", controllers.UpdateService)
 	})
 
-	micro.Route("/relationAgency", func(router fiber.Router) {
+	micro.Route("/relation-agency", func(router fiber.Router) {
 		router.Get("", controllers.FindRelationAgency)
 		router.Post("/create", controllers.CreateRelationAgencyHandler)
 		router.Post("/", controllers.CreateRelationAgencyHandler)
 	})
-	micro.Route("/relationAgency/:relationAgencyId", func(router fiber.Router) {
+	micro.Route("/relation-agency/:relationAgencyId", func(router fiber.Router) {
 		router.Delete("", controllers.RelationAgencyDelete)
 		router.Get("", controllers.FindRelationAgencyById)
 		router.Patch("", controllers.UpdateRelationAgency)
 	})
 
-	micro.Route("/insuranceProduct", func(router fiber.Router) {
+	micro.Route("/insurance-product", func(router fiber.Router) {
 		router.Get("", controllers.FindInsuranceProduct)
 		router.Post("/create", controllers.CreateInsuranceProductHandler)
 		router.Post("/", controllers.CreateInsuranceProductHandler)
 	})
-	micro.Route("/insuranceProduct/:insuranceProductId", func(router fiber.Router) {
+	micro.Route("/insurance-product/:insuranceProductId", func(router fiber.Router) {
 		router.Delete("", controllers.InsuranceProductDelete)
 		router.Get("", controllers.FindInsuranceProductById)
 		router.Patch("", controllers.UpdateInsuranceProduct)

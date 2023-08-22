@@ -188,12 +188,12 @@ func Server() {
 		router.Patch("", controllers.UpdatePayment)
 	})
 
-	micro.Route("/user-unit", func(router fiber.Router) {
+	micro.Route("/doctor-schedule", func(router fiber.Router) {
 		router.Get("", controllers.FindDoctorSchedule)
 		router.Post("/create", controllers.CreateDoctorScheduleHandler)
 		router.Post("/", controllers.CreateDoctorScheduleHandler)
 	})
-	micro.Route("/user-unit/:userUnitId", func(router fiber.Router) {
+	micro.Route("/doctor-schedule/:doctorScheduleId", func(router fiber.Router) {
 		router.Delete("", controllers.DoctorScheduleDelete)
 		router.Get("", controllers.FindDoctorScheduleById)
 		router.Patch("", controllers.UpdateDoctorSchedule)

@@ -199,5 +199,12 @@ func Server() {
 		router.Patch("", controllers.UpdateDoctorSchedule)
 	})
 
+	micro.Route("/diagnoses", func(router fiber.Router) {
+		router.Get("", controllers.FindDiagnoses)
+	})
+	micro.Route("/diagnoses/:diagnosesName", func(router fiber.Router) {
+		router.Get("", controllers.FindDiagnosesById)
+	})
+
 	log.Fatal(app.Listen(":8000"))
 }

@@ -16,7 +16,6 @@ type User struct {
 	CreatedAt time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt time.Time `gorm:"" json:"updated_at,omitempty"`
 	Role      Role
-	Units     []Unit `json:"units" gorm:"many2many:user_units"`
 }
 
 var validate = validator.New()

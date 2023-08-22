@@ -29,7 +29,7 @@ func CreateUnitHandler(c *fiber.Ctx) error {
 		UnitName:   payload.UnitName,
 		UnitStatus: payload.UnitStatus,
 		UnitSlug:   payload.UnitSlug,
-		UserId:     payload.UserId,
+		ServiceId:  payload.ServiceId,
 		CreatedAt:  now,
 		UpdatedAt:  now,
 	}
@@ -126,4 +126,19 @@ func UnitDelete(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error})
+}
+
+func FindUnitByServiceId(c *fiber.Ctx) error {
+	serviceId := c.Params("serviceId")
+
+	var service models.Unit
+	result := config.DB.First(&service, "service_id = ?", serviceId)
+	if err := result.Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Unit with that Srevice Id exists"})
+		}
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": service}})
 }

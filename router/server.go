@@ -129,6 +129,9 @@ func Server() {
 		router.Get("", controllers.FindUnitById)
 		router.Patch("", controllers.UpdateUnit)
 	})
+	micro.Route("unit/service/:serviceId", func(router fiber.Router) {
+		router.Get("", controllers.FindUnitByServiceId)
+	})
 
 	micro.Route("/religion", func(router fiber.Router) {
 		router.Get("", controllers.FindReligion)
@@ -183,6 +186,17 @@ func Server() {
 		router.Delete("", controllers.PaymentDelete)
 		router.Get("", controllers.FindPaymentById)
 		router.Patch("", controllers.UpdatePayment)
+	})
+
+	micro.Route("/userUnit", func(router fiber.Router) {
+		router.Get("", controllers.FindUserUnit)
+		router.Post("/create", controllers.CreateUserUnitHandler)
+		router.Post("/", controllers.CreateUserUnitHandler)
+	})
+	micro.Route("/userUnit/:userUnitId", func(router fiber.Router) {
+		router.Delete("", controllers.UserUnitDelete)
+		router.Get("", controllers.FindUserUnitById)
+		router.Patch("", controllers.UpdateUserUnit)
 	})
 
 	log.Fatal(app.Listen(":8000"))

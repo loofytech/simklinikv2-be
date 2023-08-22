@@ -11,8 +11,8 @@ type Unit struct {
 	UnitName   string    `gorm:"size:50; not null" json:"unit_name,omitempty"`
 	UnitStatus *bool     `gorm:"default:1; not null" json:"unit_status,omitempty"`
 	UnitSlug   string    `gorm:"size:50; not null; unique" json:"unit_slug,omitempty"`
-	UserId     int64     `gorm:"size:20; foreign_key" json:"user_id,omitempty"`
-	User       User      `gorm:"references:id"`
+	ServiceId  int64     `gorm:"size:20; foreign_key" json:"service_id,omitempty"`
+	Service    Service   `gorm:"references:id"`
 	CreatedAt  time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt  time.Time `gorm:"" json:"updated_at,omitempty"`
 }
@@ -36,7 +36,7 @@ type CreateUnitSchema struct {
 	UnitName   string `json:"unit_name" validate:"required"`
 	UnitStatus *bool  `json:"unit_status,omitempty"`
 	UnitSlug   string `json:"unit_slug,omitempty"`
-	UserId     int64  `json:"user_id" validate:"required"`
+	ServiceId  int64  `json:"service_id" validate:"required"`
 }
 
 type UpdateUnitSchema struct {

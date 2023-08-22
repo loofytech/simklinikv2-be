@@ -44,7 +44,7 @@ func CreateUnitHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"Unit": newUnit},
+		"data":   newUnit,
 	})
 }
 
@@ -62,7 +62,7 @@ func FindUnit(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(unit), "unit": unit})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(unit), "data": unit})
 }
 
 func UpdateUnit(c *fiber.Ctx) error {

@@ -45,7 +45,7 @@ func CreateDoctorScheduleHandler(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		"status": "success",
-		"data":   fiber.Map{"DoctorSchedule": newDoctorSchedule},
+		"data":   newDoctorSchedule,
 	})
 }
 

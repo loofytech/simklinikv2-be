@@ -189,14 +189,14 @@ func Server() {
 	})
 
 	micro.Route("/userUnit", func(router fiber.Router) {
-		router.Get("", controllers.FindUserUnit)
-		router.Post("/create", controllers.CreateUserUnitHandler)
-		router.Post("/", controllers.CreateUserUnitHandler)
+		router.Get("", controllers.FindDoctorSchedule)
+		router.Post("/create", controllers.CreateDoctorScheduleHandler)
+		router.Post("/", controllers.CreateDoctorScheduleHandler)
 	})
 	micro.Route("/userUnit/:userUnitId", func(router fiber.Router) {
-		router.Delete("", controllers.UserUnitDelete)
-		router.Get("", controllers.FindUserUnitById)
-		router.Patch("", controllers.UpdateUserUnit)
+		router.Delete("", controllers.DoctorScheduleDelete)
+		router.Get("", controllers.FindDoctorScheduleById)
+		router.Patch("", controllers.UpdateDoctorSchedule)
 	})
 
 	log.Fatal(app.Listen(":8000"))

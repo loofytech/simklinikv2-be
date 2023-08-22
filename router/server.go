@@ -202,8 +202,8 @@ func Server() {
 	micro.Route("/diagnoses", func(router fiber.Router) {
 		router.Get("", controllers.FindDiagnoses)
 	})
-	micro.Route("/diagnoses/:diagnosesName", func(router fiber.Router) {
-		router.Get("", controllers.FindDiagnosesById)
+	micro.Route("/diagnoses/:diagnosesCode", func(router fiber.Router) {
+		router.Get("", controllers.FindDiagnosesByName)
 	})
 
 	log.Fatal(app.Listen(":8000"))

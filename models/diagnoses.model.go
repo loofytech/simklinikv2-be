@@ -8,7 +8,7 @@ type Diagnoses struct {
 	DiagnosesCode string `gorm:"size:50; not null" json:"diagnoses_code,omitempty"`
 }
 
-func ValidateStructDiagnosis[T any](payload T) []*ErrorResponse {
+func ValidateStructDiagnoses[T any](payload T) []*ErrorResponse {
 	var errors []*ErrorResponse
 	err := validate.Struct(payload)
 	if err != nil {

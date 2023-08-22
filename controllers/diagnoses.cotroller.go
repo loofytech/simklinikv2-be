@@ -9,6 +9,11 @@ import (
 	"gorm.io/gorm"
 )
 
+// type APIDIagnoses struct {
+// 	DiagnosesName string
+// 	DiagnosesCode string
+// }
+
 func FindDiagnoses(c *fiber.Ctx) error {
 	var page = c.Query("page", "1")
 	var limit = c.Query("limit", "10")
@@ -26,11 +31,11 @@ func FindDiagnoses(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(diagnoses), "data": diagnoses})
 }
 
-func FindDiagnosesById(c *fiber.Ctx) error {
-	diagnosesName := c.Params("diagnosesName")
+func FindDiagnosesByName(c *fiber.Ctx) error {
+	diagnosesCode := c.Params("diagnosesCode")
 
 	var diagnoses models.Diagnoses
-	result := config.DB.First(&diagnoses, "id = ?", diagnosesName)
+	result := config.DB.Where("diagnoses_code LIKE ?", diagnosesCode).Find(&diagnoses)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Diagnoses with that Name exists"})

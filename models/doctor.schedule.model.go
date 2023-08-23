@@ -10,8 +10,8 @@ type DoctorSchedule struct {
 	ID            int64     `gorm:"size:20; primary_key" json:"id,omitempty"`
 	UserId        int64     `gorm:"size:20; foreign_key" json:"user_id,omitempty"`
 	UnitId        int64     `gorm:"size:20; foreign_key" json:"unit_id,omitempty"`
-	User          User      `gorm:"references:id"`
-	Unit          Unit      `gorm:"references:id"`
+	User          User      `gorm:"references:id" json:"user"`
+	Unit          Unit      `gorm:"references:id" json:"unit"`
 	Day           string    `gorm:"size:10; not null" json:"day,omitempty"`
 	OpenPractice  string    `gorm:"size:10; not null" json:"open_practice,omitempty"`
 	ClosePractice string    `gorm:"size:10; not null" json:"close_practice,omitempty"`

@@ -12,7 +12,7 @@ type Unit struct {
 	UnitStatus *bool     `gorm:"default:1; not null" json:"unit_status,omitempty"`
 	UnitSlug   string    `gorm:"size:50; not null; unique" json:"unit_slug,omitempty"`
 	ServiceId  int64     `gorm:"size:20; foreign_key" json:"service_id,omitempty"`
-	Service    Service   `gorm:"references:id"`
+	Service    Service   `gorm:"references:id" json:"service"`
 	CreatedAt  time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt  time.Time `gorm:"" json:"updated_at,omitempty"`
 }

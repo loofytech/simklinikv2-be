@@ -62,11 +62,11 @@ type Patient struct {
 	JobId            int64            `gorm:"size:20; foreign_key" json:"job_id,omitempty"`
 	EducationId      int64            `gorm:"size:20; foreign_key" json:"education_id,omitempty"`
 	MaritalStatusId  int64            `gorm:"size:20; foreign_key" json:"marital_status_id,omitempty"`
-	Religion         Religion         `gorm:"references:id"`
-	Ethnic           Ethnic           `gorm:"references:id"`
-	Job              Job              `gorm:"references:id"`
-	MaritalStatus    MaritalStatus    `gorm:"references:id"`
-	Education        Education        `gorm:"references:id"`
+	Religion         Religion         `gorm:"references:id" json:"religion"`
+	Ethnic           Ethnic           `gorm:"references:id" json:"ethnic"`
+	Job              Job              `gorm:"references:id" json:"job"`
+	MaritalStatus    MaritalStatus    `gorm:"references:id" json:"marital_status"`
+	Education        Education        `gorm:"references:id" json:"education"`
 }
 
 func ValidateStructPatient[T any](payload T) []*ErrorResponse {

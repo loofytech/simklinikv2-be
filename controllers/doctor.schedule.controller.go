@@ -101,7 +101,7 @@ func UpdateDoctorSchedule(c *fiber.Ctx) error {
 
 	config.DB.Model(&doctorSchedule).Updates(updates)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": doctorSchedule}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": doctorSchedule})
 }
 
 func FindDoctorScheduleById(c *fiber.Ctx) error {
@@ -116,7 +116,7 @@ func FindDoctorScheduleById(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": doctorSchedule}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": doctorSchedule})
 }
 
 func DoctorScheduleDelete(c *fiber.Ctx) error {

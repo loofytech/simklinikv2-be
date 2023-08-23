@@ -15,7 +15,7 @@ type InsuranceProduct struct {
 	CreatedAt                   time.Time      `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt                   time.Time      `gorm:"" json:"updated_at,omitempty"`
 	RelationAgencyId            int64          `gorm:"size:20; foreign_key" json:"relation_agency_id,omitempty"`
-	RelationAgency              RelationAgency `gorm:"references:id"`
+	RelationAgency              RelationAgency `gorm:"references:id" json:"relation_agency"`
 }
 
 func ValidateStructInsuranceProduct[T any](payload T) []*ErrorResponse {

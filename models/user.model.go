@@ -15,7 +15,7 @@ type User struct {
 	RoleId    int64     `gorm:"size:20; foreign_key" json:"role_id,omitempty"`
 	CreatedAt time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt time.Time `gorm:"" json:"updated_at,omitempty"`
-	Role      Role
+	Role      Role      `gorm:"references:id" json:"role"`
 }
 
 var validate = validator.New()

@@ -11,8 +11,8 @@ type ServiceAction struct {
 	UnitId         int64        `gorm:"size:20; foreign_key" json:"unit_id,omitempty"`
 	RegistrationId int64        `gorm:"size:20; foreign_key" json:"registration_id,omitempty"`
 	UserId         int64        `gorm:"size:20; foreign_key" json:"user_id,omitempty"`
-	User           User         `gorm:"references:id"`
-	Unit           Unit         `gorm:"references:id"`
+	User           User         `gorm:"references:id" json:"user"`
+	Unit           Unit         `gorm:"references:id" json:"unit"`
 	Registration   Registration `gorm:"references:id"`
 	CreatedAt      time.Time    `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt      time.Time    `gorm:"" json:"updated_at,omitempty"`

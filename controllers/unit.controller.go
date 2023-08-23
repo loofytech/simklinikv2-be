@@ -131,8 +131,8 @@ func UnitDelete(c *fiber.Ctx) error {
 func FindUnitByServiceId(c *fiber.Ctx) error {
 	serviceId := c.Params("serviceId")
 
-	var service models.Unit
-	result := config.DB.First(&service, "service_id = ?", serviceId)
+	var unit []models.Unit
+	result := config.DB.Find(&unit, "service_id = ?", serviceId)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Unit with that Srevice Id exists"})
@@ -140,5 +140,5 @@ func FindUnitByServiceId(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": service}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": unit})
 }

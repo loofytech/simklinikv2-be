@@ -80,7 +80,7 @@ func FindPatient(c *fiber.Ctx) error {
 	offset := (intPage - 1) * intLimit
 
 	var patient []models.Patient
-	results := config.DB.Limit(intLimit).Offset(offset).Find(&patient)
+	results := config.DB.Limit(intLimit).Offset(offset).Preload("Job").Preload("Ethnic").Preload("Religion").Preload("Education").Preload("MaritalStatus").Find(&patient)
 	if results.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
@@ -167,7 +167,7 @@ func FindPatientById(c *fiber.Ctx) error {
 	patientId := c.Params("patientId")
 
 	var patient models.Patient
-	result := config.DB.First(&patient, "id = ?", patientId)
+	result := config.DB.Preload("Job").Preload("Ethnic").Preload("Religion").Preload("Education").Preload("MaritalStatus").First(&patient, "id = ?", patientId)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Patient with that Id exists"})

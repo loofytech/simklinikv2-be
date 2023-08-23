@@ -58,7 +58,7 @@ func FindInsuranceProduct(c *fiber.Ctx) error {
 	offset := (intPage - 1) * intLimit
 
 	var insuranceProduct []models.InsuranceProduct
-	results := config.DB.Limit(intLimit).Offset(offset).Find(&insuranceProduct)
+	results := config.DB.Limit(intLimit).Offset(offset).Preload("RelationAgency").Find(&insuranceProduct)
 	if results.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
@@ -116,7 +116,7 @@ func FindInsuranceProductById(c *fiber.Ctx) error {
 	insuranceProductId := c.Params("insuranceProductId")
 
 	var insuranceProduct models.InsuranceProduct
-	result := config.DB.First(&insuranceProduct, "id = ?", insuranceProductId)
+	result := config.DB.Preload("RelationAgency").First(&insuranceProduct, "id = ?", insuranceProductId)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No InsuranceProduct with that Id exists"})

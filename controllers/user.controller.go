@@ -62,7 +62,7 @@ func FindUser(c *fiber.Ctx) error {
 	offset := (intPage - 1) * intLimit
 
 	var user []models.User
-	results := config.DB.Limit(intLimit).Offset(offset).Find(&user)
+	results := config.DB.Limit(intLimit).Offset(offset).Preload("Role").Find(&user)
 	if results.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
@@ -118,7 +118,7 @@ func FindUserById(c *fiber.Ctx) error {
 	userId := c.Params("userId")
 
 	var user models.User
-	result := config.DB.First(&user, "id = ?", userId)
+	result := config.DB.Preload("Role").First(&user, "id = ?", userId)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No user with that Id exists"})

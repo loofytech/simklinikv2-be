@@ -191,7 +191,7 @@ func FindRegistration(c *fiber.Ctx) error {
 	offset := (intPage - 1) * intLimit
 
 	var registration []models.Registration
-	results := config.DB.Limit(intLimit).Offset(offset).Find(&registration)
+	results := config.DB.Limit(intLimit).Offset(offset).Preload("Service").Preload("Patient").Find(&registration)
 	if results.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
@@ -230,7 +230,7 @@ func FindRegistrationById(c *fiber.Ctx) error {
 	registrationId := c.Params("registrationId")
 
 	var registration models.Registration
-	result := config.DB.First(&registration, "id = ?", registrationId)
+	result := config.DB.Preload("Service").Preload("Patient").First(&registration, "id = ?", registrationId)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Registration with that Id exists"})

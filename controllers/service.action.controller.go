@@ -56,7 +56,7 @@ func FindServiceAction(c *fiber.Ctx) error {
 	offset := (intPage - 1) * intLimit
 
 	var serviceAction []models.ServiceAction
-	results := config.DB.Limit(intLimit).Offset(offset).Find(&serviceAction)
+	results := config.DB.Limit(intLimit).Offset(offset).Preload("User").Preload("Unit").Preload("Registration").Find(&serviceAction)
 	if results.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
@@ -102,7 +102,7 @@ func FindServiceActionById(c *fiber.Ctx) error {
 	serviceActionId := c.Params("serviceActionId")
 
 	var service models.ServiceAction
-	result := config.DB.First(&service, "id = ?", serviceActionId)
+	result := config.DB.Preload("User").Preload("Unit").Preload("Registration").First(&service, "id = ?", serviceActionId)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Service with that Id exists"})

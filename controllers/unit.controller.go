@@ -57,7 +57,7 @@ func FindUnit(c *fiber.Ctx) error {
 	offset := (intPage - 1) * intLimit
 
 	var unit []models.Unit
-	results := config.DB.Limit(intLimit).Offset(offset).Find(&unit)
+	results := config.DB.Limit(intLimit).Offset(offset).Preload("Service").Find(&unit)
 	if results.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}
@@ -103,7 +103,7 @@ func FindUnitById(c *fiber.Ctx) error {
 	unitId := c.Params("unitId")
 
 	var unit models.Unit
-	result := config.DB.First(&unit, "id = ?", unitId)
+	result := config.DB.Preload("Service").First(&unit, "id = ?", unitId)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Unit with that Id exists"})

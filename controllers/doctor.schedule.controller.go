@@ -108,7 +108,7 @@ func FindDoctorScheduleById(c *fiber.Ctx) error {
 	doctorScheduleId := c.Params("doctorScheduleId")
 
 	var doctorSchedule models.DoctorSchedule
-	result := config.DB.First(&doctorSchedule, "id = ?", doctorScheduleId)
+	result := config.DB.Preload("User").Preload("Unit").First(&doctorSchedule, "id = ?", doctorScheduleId)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No DoctorSchedule with that Id exists"})

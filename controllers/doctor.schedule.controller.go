@@ -132,3 +132,18 @@ func DoctorScheduleDelete(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error})
 }
+
+func FindScheduleByUnit(c *fiber.Ctx) error {
+	unitId := c.Params("unitId")
+
+	var schedule []models.DoctorSchedule
+	result := config.DB.Joins("User").Find(&schedule, "unit_id = ?", unitId)
+	if err := result.Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Unit with that Srevice Id exists"})
+		}
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": schedule})
+}

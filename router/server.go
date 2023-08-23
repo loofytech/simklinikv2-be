@@ -192,6 +192,7 @@ func Server() {
 		router.Get("", controllers.FindDoctorSchedule)
 		router.Post("/create", controllers.CreateDoctorScheduleHandler)
 		router.Post("/", controllers.CreateDoctorScheduleHandler)
+		router.Get("/unit/:unitId", controllers.FindScheduleByUnit)
 	})
 	micro.Route("/doctor-schedule/:doctorScheduleId", func(router fiber.Router) {
 		router.Delete("", controllers.DoctorScheduleDelete)

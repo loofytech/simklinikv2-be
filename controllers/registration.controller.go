@@ -13,6 +13,15 @@ import (
 	"gorm.io/gorm"
 )
 
+func Bod(t time.Time) time.Time {
+	year, month, day := t.Date()
+	return time.Date(year, month, day, 0, 0, 0, 0, t.Location())
+}
+
+func Eod(t time.Time) time.Time {
+	return Bod(t).AddDate(0, 0, 1).Add(-time.Second)
+}
+
 func CreateRegistrationHandler(c *fiber.Ctx) error {
 	var dumpPatientId int64
 	var dumpRegId int64
@@ -191,7 +200,14 @@ func FindRegistration(c *fiber.Ctx) error {
 	offset := (intPage - 1) * intLimit
 
 	var registration []models.Registration
-	results := config.DB.Limit(intLimit).Offset(offset).Preload("Service").Preload("Patient").Find(&registration)
+	indo, err := time.LoadLocation("Asia/Jakarta")
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	now := time.Now().In(indo)
+	results := config.DB.Limit(intLimit).Offset(offset).Preload("Service").Preload("Patient").Where("created_at BETWEEN ? AND ?", Bod((now)), Eod(now)).Find(&registration)
 	if results.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}

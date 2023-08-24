@@ -191,3 +191,18 @@ func PatientDelete(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error})
 }
+
+func FindPatientByMR(c *fiber.Ctx) error {
+	medicalRecord := c.Params("medicalRecord")
+
+	var patient models.Patient
+	result := config.DB.Preload("Job").Preload("Ethnic").Preload("Religion").Preload("Education").Preload("MaritalStatus").First(&patient, "medical_record = ?", medicalRecord)
+	if err := result.Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Patient with that Id exists"})
+		}
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": patient}})
+}

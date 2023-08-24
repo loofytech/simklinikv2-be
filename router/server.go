@@ -155,6 +155,10 @@ func Server() {
 		router.Patch("", controllers.UpdatePatient)
 	})
 
+	micro.Route("/patient/medical-record/:medicalRecord", func(router fiber.Router) {
+		router.Get("", controllers.FindPatientByMR)
+	})
+
 	micro.Route("/registration", func(router fiber.Router) {
 		router.Get("", controllers.FindRegistration)
 		router.Post("/create", controllers.CreateRegistrationHandler)

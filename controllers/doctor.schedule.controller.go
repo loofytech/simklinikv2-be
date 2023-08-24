@@ -58,7 +58,7 @@ func FindDoctorSchedule(c *fiber.Ctx) error {
 	offset := (intPage - 1) * intLimit
 
 	var doctorSchedule []models.DoctorSchedule
-	results := config.DB.Limit(intLimit).Offset(offset).Joins("User").Joins("Unit").Find(&doctorSchedule)
+	results := config.DB.Limit(intLimit).Offset(offset).Preload("User").Preload("Unit").Find(&doctorSchedule).Select("id")
 	if results.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
 	}

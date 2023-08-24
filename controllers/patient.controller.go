@@ -128,7 +128,7 @@ func UpdatePatient(c *fiber.Ctx) error {
 		updates["birth_place"] = payload.BirthPlace
 	}
 
-	if payload.BirthDate != time.Now() {
+	if payload.BirthDate != "" {
 		updates["birth_date"] = payload.BirthDate
 	}
 

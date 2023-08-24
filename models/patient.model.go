@@ -48,7 +48,7 @@ type Patient struct {
 	PatientPhone     string           `gorm:"size:50; not null" json:"patient_phone,omitempty"`
 	PatientNik       string           `gorm:"size:50; not null" json:"patient_nik,omitempty"`
 	BirthPlace       string           `gorm:"size:50; null" json:"birth_place,omitempty"`
-	BirthDate        time.Time        `gorm:"not null" json:"birth_date"`
+	BirthDate        string           `gorm:"size:50; not null" json:"birth_date"`
 	Province         string           `gorm:"size:50; not null" json:"province,omitempty"`
 	Regency          string           `gorm:"size:50; not null" json:"regency,omitempty"`
 	District         string           `gorm:"size:50; not null" json:"district,omitempty"`
@@ -91,7 +91,7 @@ type CreatePatientSchema struct {
 	PatientPhone     string           `json:"patient_phone" validate:"required"`
 	PatientNik       string           `json:"patient_nik" validate:"required"`
 	BirthPlace       string           `json:"birth_place" validate:"required"`
-	BirthDate        time.Time        `json:"birth_date" validate:"required"`
+	BirthDate        string           `json:"birth_date" validate:"required"`
 	Province         string           `json:"province" validate:"required"`
 	Regency          string           `json:"regency" validate:"required"`
 	District         string           `json:"district" validate:"required"`
@@ -112,7 +112,7 @@ type UpdatePatientSchema struct {
 	PatientPhone     string           `json:"patient_phone,omitempty"`
 	PatientNik       string           `json:"patient_nik,omitempty"`
 	BirthPlace       string           `json:"birth_place,omitempty"`
-	BirthDate        time.Time        `json:"birth_date,omitempty"`
+	BirthDate        string           `json:"birth_date,omitempty"`
 	Province         string           `json:"province,omitempty"`
 	Regency          string           `json:"regency,omitempty"`
 	District         string           `json:"district,omitempty"`

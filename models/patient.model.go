@@ -97,7 +97,7 @@ type CreatePatientSchema struct {
 	District         string           `json:"district" validate:"required"`
 	SubDistrict      string           `json:"sub_district" validate:"required"`
 	PatientGender    patientGender    `json:"patient_gender" validate:"required"`
-	PatientBloodType patientBloodType `json:"patient_blood_type" validate:"required"`
+	PatientBloodType patientBloodType `json:"patient_blood_type,omitempty"`
 	ReligionId       int64            `json:"religion_id" validate:"required"`
 	EthnicId         int64            `json:"ethnic_id" validate:"required"`
 	JobId            int64            `json:"job_id" validate:"required"`

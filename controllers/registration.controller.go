@@ -30,6 +30,7 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 	var ppx *models.CreatePatientSchema
 	var mmx *models.UpdatePatientSchema
 	var sAct *models.ServiceAction
+	var scrn *models.CreateScreeningSchema
 	now := time.Now()
 
 	payload := struct {
@@ -103,26 +104,25 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 		mr := strings.Join([]string{"A", fmt.Sprintf("%06d", counting+1)}, "")
 
 		newPatient := models.Patient{
-			MedicalRecord:    mr,
-			PatientName:      ppx.PatientName,
-			PatientAddress:   ppx.PatientAddress,
-			PatientPhone:     ppx.PatientPhone,
-			PatientNik:       ppx.PatientNik,
-			BirthPlace:       ppx.BirthPlace,
-			BirthDate:        ppx.BirthDate,
-			Province:         ppx.Province,
-			Regency:          ppx.Regency,
-			District:         ppx.District,
-			SubDistrict:      ppx.SubDistrict,
-			PatientGender:    ppx.PatientGender,
-			PatientBloodType: ppx.PatientBloodType,
-			JobId:            ppx.JobId,
-			EthnicId:         ppx.EthnicId,
-			ReligionId:       ppx.ReligionId,
-			EducationId:      ppx.EducationId,
-			MaritalStatusId:  ppx.MaritalStatusId,
-			CreatedAt:        now,
-			UpdatedAt:        now,
+			MedicalRecord:   mr,
+			PatientName:     ppx.PatientName,
+			PatientAddress:  ppx.PatientAddress,
+			PatientPhone:    ppx.PatientPhone,
+			PatientNik:      ppx.PatientNik,
+			BirthPlace:      ppx.BirthPlace,
+			BirthDate:       ppx.BirthDate,
+			Province:        ppx.Province,
+			Regency:         ppx.Regency,
+			District:        ppx.District,
+			SubDistrict:     ppx.SubDistrict,
+			PatientGender:   ppx.PatientGender,
+			JobId:           ppx.JobId,
+			EthnicId:        ppx.EthnicId,
+			ReligionId:      ppx.ReligionId,
+			EducationId:     ppx.EducationId,
+			MaritalStatusId: ppx.MaritalStatusId,
+			CreatedAt:       now,
+			UpdatedAt:       now,
 		}
 
 		result := config.DB.Create(&newPatient)
@@ -182,6 +182,39 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusConflict).JSON(fiber.Map{"status": "fail", "message": "Patient already exist"})
 	} else if newServiceAction.Error != nil {
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": newServiceAction.Error.Error()})
+	}
+
+	if err := c.BodyParser(&scrn); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+	}
+
+	newScreening := models.Screening{
+		BodyWeight:             0,
+		BodyHeight:             0,
+		BodyTemperature:        0,
+		BodyBreath:             0,
+		BodyPulse:              0,
+		BodyBloodPressure:      0,
+		BodyIMT:                0,
+		BodyOxygenSaturation:   0,
+		AbdominalCircumference: 0,
+		HistoryOtherDesease:    "",
+		HistoryTreatment:       "",
+		AllergyMedicine:        "",
+		AllergyFood:            "",
+		ServiceActionId:        newSAct.ID,
+		PatientId:              dumpPatientId,
+		BodyDiabetes:           "0",
+		BodyHaemopilia:         "0",
+		BodyHeartDisease:       "0",
+	}
+
+	result := config.DB.Create(&newScreening)
+
+	if result.Error != nil && strings.Contains(result.Error.Error(), "duplicate key value violates unique") {
+		return c.Status(fiber.StatusConflict).JSON(fiber.Map{"status": "fail", "message": "Screening already exist"})
+	} else if result.Error != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error.Error()})
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{

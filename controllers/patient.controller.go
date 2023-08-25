@@ -199,10 +199,10 @@ func FindPatientByMR(c *fiber.Ctx) error {
 	result := config.DB.Preload("Job").Preload("Ethnic").Preload("Religion").Preload("Education").Preload("MaritalStatus").First(&patient, "medical_record = ?", medicalRecord)
 	if err := result.Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Patient with that Id exists"})
+			return c.Status(400).JSON(fiber.Map{"status": "fail", "message": "No Patient with that Medical Record exists"})
 		}
 		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": fiber.Map{"data": patient}})
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": patient})
 }

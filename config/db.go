@@ -59,6 +59,7 @@ func ConnectDB(config *ConfigDB) {
 		&models.Payment{},
 		&models.DoctorSchedule{},
 		&models.Diagnoses{},
+		&models.Screening{},
 	)
 
 	log.Println("🚀 Connected Successfully to the Database")

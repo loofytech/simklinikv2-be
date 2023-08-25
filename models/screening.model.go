@@ -38,10 +38,10 @@ type Screening struct {
 	BodyHaemopilia         enum          `gorm:"column:body_haemopilia;type:enum('0','1','2')" json:"body_haemopilia"`
 	BodyHeartDisease       enum          `gorm:"column:body_heart_desease;type:enum('0','1','2')" json:"body_heart_desease"`
 	AbdominalCircumference float64       `gorm:"size:50; not null" json:"abdominal_circumference,omitempty"`
-	HistoryOtherDesease    string        `gorm:"size:255; not null" json:"history_other_desease,omitempty"`
-	HistoryTreatment       string        `gorm:"size:255; not null" json:"history_treatment,omitempty"`
-	AllergyMedicine        string        `gorm:"size:255; not null" json:"allergy_medicine,omitempty"`
-	AllergyFood            string        `gorm:"size:255; not null" json:"allergy_food,omitempty"`
+	HistoryOtherDesease    string        `gorm:"size:1000; not null" json:"history_other_desease,omitempty"`
+	HistoryTreatment       string        `gorm:"size:1000; not null" json:"history_treatment,omitempty"`
+	AllergyMedicine        string        `gorm:"size:1000; not null" json:"allergy_medicine,omitempty"`
+	AllergyFood            string        `gorm:"size:1000; not null" json:"allergy_food,omitempty"`
 	ServiceActionId        int64         `gorm:"size:20; foreign_key" json:"service_action_id,omitempty"`
 	ServiceAction          ServiceAction `gorm:"references:id" json:"service_action"`
 	PatientId              int64         `gorm:"size:20; foreign_key" json:"patient_id,omitempty"`

@@ -70,7 +70,7 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 		updates["patient_phone"] = mmx.PatientPhone
 		updates["patient_nik"] = mmx.PatientNik
 		updates["patient_gender"] = mmx.PatientGender
-		updates["patient_blood_type"] = mmx.PatientBloodType
+		// updates["patient_blood_type"] = mmx.PatientBloodType
 		updates["birth_place"] = mmx.BirthPlace
 		updates["birth_date"] = mmx.BirthDate
 		updates["province"] = mmx.Province

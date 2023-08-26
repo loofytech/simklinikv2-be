@@ -53,5 +53,4 @@ func main() {
 	// 		"message": "Welcome to Golang, Fiber, and GORM",
 	// 	})
 	// })
-
 }

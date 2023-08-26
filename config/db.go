@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"sim-klinikv2/models"
+	"sim-klinikv2/seeds"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -31,7 +32,9 @@ func ConnectDB(config *ConfigDB) {
 	var err error
 	dsn := strings.Join(str, "")
 
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
+		SkipDefaultTransaction: false,
+	})
 	if err != nil {
 		log.Fatal("Failed to connect to the Database! \n", err.Error())
 		os.Exit(1)
@@ -60,7 +63,17 @@ func ConnectDB(config *ConfigDB) {
 		&models.DoctorSchedule{},
 		&models.Diagnoses{},
 		&models.Screening{},
+		&models.Inspection{},
 	)
+
+	// seeder
+	seeds.CreateRoleSeeder(DB)
+	seeds.CreateMaritalStatusSeeder(DB)
+	seeds.CreateJobSeeder(DB)
+	seeds.CreateEthnicSeeder(DB)
+	seeds.CreateEducationSeeder(DB)
+	seeds.CreateReligionSeeder(DB)
+	seeds.CreatePaymentSeeder(DB)
 
 	log.Println("🚀 Connected Successfully to the Database")
 }

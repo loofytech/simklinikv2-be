@@ -98,9 +98,9 @@ func UpdateScreening(c *fiber.Ctx) error {
 		updates["allergy_food"] = payload.AllergyFood
 	}
 
-	// if payload.ServiceActionId != nil {
-	// 	updates["sub_district"] = payload.ServiceActionId
-	// }
+	if payload.ServiceActionId != 0 {
+		updates["service_action_id"] = payload.ServiceActionId
+	}
 
 	updates["updated_at"] = time.Now()
 
@@ -137,6 +137,33 @@ func UpdateScreening(c *fiber.Ctx) error {
 		} else if result.Error != nil {
 			return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error.Error()})
 		}
+	}
+
+	newInspection := models.Inspection{
+		Anamnesis:           "",
+		Objective:           "",
+		KU:                  "",
+		Thoraks:             "",
+		Therapy:             "",
+		Educations:          "",
+		Instructions:        "",
+		Abd:                 "",
+		Extremity:           "",
+		WorkingDiagnosis:    "",
+		Diagnosis:           "",
+		PhysicalExamination: "",
+		Explanation:         "",
+		AttachmentBefore:    "",
+		AttachmentAfter:     "",
+		ServiceActionId:     payload.ServiceActionId,
+	}
+
+	resInsection := config.DB.Create(&newInspection)
+
+	if resInsection.Error != nil && strings.Contains(resInsection.Error.Error(), "duplicate key value violates unique") {
+		return c.Status(fiber.StatusConflict).JSON(fiber.Map{"status": "fail", "message": "Screening already exist"})
+	} else if resInsection.Error != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": resInsection.Error.Error()})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": screening})

@@ -9,12 +9,52 @@ import (
 func CreateRoleSeeder(db *gorm.DB) {
 	var roles = []models.Role{
 		{
-			RoleName: "Role 1",
-			RoleSlug: "role_1",
+			RoleName: "Admin",
+			RoleSlug: "admin",
 		},
 		{
-			RoleName: "Role 1",
-			RoleSlug: "role_2",
+			RoleName: "IT",
+			RoleSlug: "it",
+		},
+		{
+			RoleName: "Dokter",
+			RoleSlug: "dokter",
+		},
+		{
+			RoleName: "Administrasi",
+			RoleSlug: "administrasi",
+		},
+		{
+			RoleName: "Perawat",
+			RoleSlug: "perawat",
+		},
+		{
+			RoleName: "Apoteker",
+			RoleSlug: "apoteker",
+		},
+		{
+			RoleName: "Rujukan",
+			RoleSlug: "rujukan",
+		},
+		{
+			RoleName: "Keuangan",
+			RoleSlug: "keuangan",
+		},
+		{
+			RoleName: "Kasir",
+			RoleSlug: "kasir",
+		},
+		{
+			RoleName: "Radiologi",
+			RoleSlug: "radiologi",
+		},
+		{
+			RoleName: "Laboratorium",
+			RoleSlug: "laboratorium",
+		},
+		{
+			RoleName: "Fisioterapi",
+			RoleSlug: "fisioterapi",
 		},
 	}
 

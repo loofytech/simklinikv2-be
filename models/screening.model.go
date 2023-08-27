@@ -26,12 +26,14 @@ func (en enum) Value() (driver.Value, error) {
 
 type Screening struct {
 	ID                     int64         `gorm:"size:20; primary_key" json:"id,omitempty"`
+	IdScreening            string        `gorm:"size:20; not null; unique" json:"id_screening"`
 	BodyWeight             float64       `gorm:"size:50; not null" json:"body_weight,omitempty"`
 	BodyHeight             float64       `gorm:"size:50; not null" json:"body_height,omitempty"`
 	BodyTemperature        float64       `gorm:"size:50; not null" json:"body_temperature,omitempty"`
 	BodyBreath             float64       `gorm:"size:50; not null" json:"body_breath,omitempty"`
 	BodyPulse              float64       `gorm:"size:50; not null" json:"body_pulse,omitempty"`
-	BodyBloodPressure      float64       `gorm:"size:50; not null" json:"body_blood_pressure,omitempty"`
+	BodyBloodPressureMM    float64       `gorm:"size:50; not null" json:"body_blood_pressure_mm,omitempty"`
+	BodyBloodPressureHG    float64       `gorm:"size:50; not null" json:"body_blood_pressure_hg,omitempty"`
 	BodyIMT                float64       `gorm:"size:50; not null" json:"body_imt,omitempty"`
 	BodyOxygenSaturation   float64       `gorm:"size:50; not null" json:"body_oxygen_saturation,omitempty"`
 	BodyDiabetes           enum          `gorm:"column:body_diabetes;type:enum('0','1','2')" json:"body_diabetes"`
@@ -66,12 +68,14 @@ func ValidateStructScreening[T any](payload T) []*ErrorResponse {
 }
 
 type CreateScreeningSchema struct {
+	IdScreening            string  `json:"id_screening" validate:"required"`
 	BodyWeight             float64 `json:"body_weight" validate:"required"`
 	BodyHeight             float64 `json:"body_height" validate:"required"`
 	BodyTemperature        float64 `json:"body_temperature" validate:"required"`
 	BodyBreath             float64 `json:"body_breath" validate:"required"`
 	BodyPulse              float64 `json:"body_pulse" validate:"required"`
-	BodyBloodPressure      float64 `json:"body_blood_pressure" validate:"required"`
+	BodyBloodPressureMM    float64 `json:"body_blood_pressure_mm" validate:"required"`
+	BodyBloodPressureHG    float64 `json:"body_blood_pressure_hg" validate:"required"`
 	BodyIMT                float64 `json:"body_imt" validate:"required"`
 	BodyOxygenSaturation   float64 `json:"body_oxygen_saturation" validate:"required"`
 	BodyDiabetes           enum    `json:"body_diabetes" validate:"required"`
@@ -86,12 +90,14 @@ type CreateScreeningSchema struct {
 }
 
 type UpdateScreeningSchema struct {
+	IdScreening            string  `json:"id_screening,omitempty"`
 	BodyWeight             float64 `json:"body_weight,omitempty"`
 	BodyHeight             float64 `json:"body_height,omitempty"`
 	BodyTemperature        float64 `json:"body_temperature,omitempty"`
 	BodyBreath             float64 `json:"body_breath,omitempty"`
 	BodyPulse              float64 `json:"body_pulse,omitempty"`
-	BodyBloodPressure      float64 `json:"body_blood_pressure,omitempty"`
+	BodyBloodPressureMM    float64 `json:"body_blood_pressure_mm,omitempty"`
+	BodyBloodPressureHG    float64 `json:"body_blood_pressure_hg,omitempty"`
 	BodyIMT                float64 `json:"body_imt,omitempty"`
 	BodyOxygenSaturation   float64 `json:"body_oxygen_saturation,omitempty"`
 	BodyDiabetes           enum    `json:"body_diabetes,omitempty"`

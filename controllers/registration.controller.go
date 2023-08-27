@@ -27,6 +27,7 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 	var dumpRegId int64
 
 	var patient models.Patient
+	var screening models.Screening
 	var ppx *models.CreatePatientSchema
 	var mmx *models.UpdatePatientSchema
 	var sAct *models.ServiceAction
@@ -64,13 +65,14 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 		}
 
+		// update patient data
 		updates := make(map[string]interface{})
 		updates["patient_name"] = mmx.PatientName
 		updates["patient_address"] = mmx.PatientAddress
 		updates["patient_phone"] = mmx.PatientPhone
 		updates["patient_nik"] = mmx.PatientNik
 		updates["patient_gender"] = mmx.PatientGender
-		// updates["patient_blood_type"] = mmx.PatientBloodType
+		updates["patient_blood_type"] = mmx.PatientBloodType
 		updates["birth_place"] = mmx.BirthPlace
 		updates["birth_date"] = mmx.BirthDate
 		updates["province"] = mmx.Province
@@ -86,6 +88,7 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error.Error()})
 		}
 
+		// get id patient & given to global variable
 		dumpPatientIds := &dumpPatientId
 		*dumpPatientIds = int64(patient.ID)
 	} else {
@@ -103,6 +106,7 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 
 		mr := strings.Join([]string{"A", fmt.Sprintf("%06d", counting+1)}, "")
 
+		// create patient data
 		newPatient := models.Patient{
 			MedicalRecord:   mr,
 			PatientName:     ppx.PatientName,
@@ -133,10 +137,12 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 			return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error.Error()})
 		}
 
+		// get id patient & given to global variable
 		dumpPatientIds := &dumpPatientId
 		*dumpPatientIds = int64(newPatient.ID)
 	}
 
+	// create registration data & use patient id
 	newRegistration := models.Registration{
 		ResponsibleName:     payload.ResponsibleName,
 		ResponsiblePhone:    payload.ResponsiblePhone,
@@ -168,6 +174,7 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(errors)
 	}
 
+	// create data service_actions
 	newSAct := models.ServiceAction{
 		UnitId:         sAct.UnitId,
 		UserId:         sAct.UserId,
@@ -188,13 +195,21 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "fail", "message": err.Error()})
 	}
 
+	var counting int64
+	config.DB.Find(&screening).Count(&counting)
+
+	idscreen := strings.Join([]string{"S", fmt.Sprintf("%010d", counting+1)}, "")
+
+	// create data screenings
 	newScreening := models.Screening{
+		IdScreening:            idscreen,
 		BodyWeight:             0,
 		BodyHeight:             0,
 		BodyTemperature:        0,
 		BodyBreath:             0,
 		BodyPulse:              0,
-		BodyBloodPressure:      0,
+		BodyBloodPressureMM:    0,
+		BodyBloodPressureHG:    0,
 		BodyIMT:                0,
 		BodyOxygenSaturation:   0,
 		AbdominalCircumference: 0,

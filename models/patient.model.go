@@ -16,10 +16,11 @@ const (
 )
 
 const (
-	TypeA  patientBloodType = "A"
-	TypeB  patientBloodType = "B"
-	TypeO  patientBloodType = "O"
-	TypeAB patientBloodType = "AB"
+	TypeA              patientBloodType = "A"
+	TypeB              patientBloodType = "B"
+	TypeO              patientBloodType = "O"
+	TypeAB             patientBloodType = "AB"
+	TypeTidakDiketahui patientBloodType = "TD"
 )
 
 func (pg *patientGender) Scan(value interface{}) error {
@@ -54,7 +55,7 @@ type Patient struct {
 	District         string           `gorm:"size:50; not null" json:"district,omitempty"`
 	SubDistrict      string           `gorm:"size:50; not null" json:"sub_district,omitempty"`
 	PatientGender    patientGender    `gorm:"column:patient_gender;type:enum('L','P')" json:"patient_gender"`
-	PatientBloodType patientBloodType `gorm:"column:patient_blood_type; type:enum('A','B','O','AB'); default:null" json:"patient_blood_type"`
+	PatientBloodType patientBloodType `gorm:"column:patient_blood_type; type:enum('A','B','O','AB','TD'); default:null" json:"patient_blood_type"`
 	CreatedAt        time.Time        `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt        time.Time        `gorm:"" json:"updated_at,omitempty"`
 	ReligionId       int64            `gorm:"size:20; foreign_key" json:"religion_id,omitempty"`

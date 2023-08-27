@@ -3,6 +3,7 @@ package controllers
 import (
 	"sim-klinikv2/config"
 	"sim-klinikv2/models"
+	"strconv"
 	"strings"
 	"time"
 
@@ -58,8 +59,12 @@ func UpdateScreening(c *fiber.Ctx) error {
 		updates["body_pulse"] = payload.BodyPulse
 	}
 
-	if payload.BodyBloodPressure != 0 {
-		updates["body_blood_pressure"] = payload.BodyBloodPressure
+	if payload.BodyBloodPressureMM != 0 {
+		updates["body_blood_pressure_mm"] = payload.BodyBloodPressureMM
+	}
+
+	if payload.BodyBloodPressureHG != 0 {
+		updates["body_blood_pressure_hg"] = payload.BodyBloodPressureHG
 	}
 
 	if payload.BodyIMT != 0 {
@@ -139,6 +144,7 @@ func UpdateScreening(c *fiber.Ctx) error {
 		}
 	}
 
+	// create Inspection
 	newInspection := models.Inspection{
 		Anamnesis:           "",
 		Objective:           "",
@@ -167,4 +173,51 @@ func UpdateScreening(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": screening})
+}
+
+func FindScreening(c *fiber.Ctx) error {
+	var page = c.Query("page", "1")
+	var limit = c.Query("limit", "10")
+
+	intPage, _ := strconv.Atoi(page)
+	intLimit, _ := strconv.Atoi(limit)
+	offset := (intPage - 1) * intLimit
+
+	var screening []models.Screening
+
+	results := config.DB.Limit(intLimit).Offset(offset).Preload("Patient").Find(&screening)
+	if results.Error != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": results.Error})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "results": len(screening), "data": screening})
+}
+
+func FindScreeningById(c *fiber.Ctx) error {
+	screeningId := c.Params("screeningId")
+
+	var screening models.Screening
+	result := config.DB.Preload("Patient").First(&screening, "id = ?", screeningId)
+	if err := result.Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Screening with that Id exists"})
+		}
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": screening})
+}
+
+func ScreeningDelete(c *fiber.Ctx) error {
+	screeningId := c.Params("screeningId")
+
+	result := config.DB.Delete(&models.Screening{}, "id = ?", screeningId)
+
+	if result.RowsAffected == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Screening with that Id exists"})
+	} else if result.Error != nil {
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error})
+	}
+
+	return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error})
 }

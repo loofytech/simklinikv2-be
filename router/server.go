@@ -212,11 +212,11 @@ func Server() {
 	})
 
 	micro.Route("/screening", func(router fiber.Router) {
-		// router.Get("", controllers.FindScreening)
+		router.Get("", controllers.FindScreening)
 	})
 	micro.Route("/screening/:screeningId", func(router fiber.Router) {
-		// router.Delete("", controllers.ScreeningDelete)
-		// router.Get("", controllers.FindScreeningById)
+		router.Delete("", controllers.ScreeningDelete)
+		router.Get("", controllers.FindScreeningById)
 		router.Patch("", controllers.UpdateScreening)
 	})
 

@@ -107,6 +107,7 @@ func UpdateScreening(c *fiber.Ctx) error {
 		updates["service_action_id"] = payload.ServiceActionId
 	}
 
+	updates["is_submit"] = "true"
 	updates["updated_at"] = time.Now()
 
 	config.DB.Model(&screening).Updates(updates)

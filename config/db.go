@@ -63,6 +63,10 @@ func ConnectDB(config *ConfigDB) {
 		&models.Diagnoses{},
 		&models.Screening{},
 		&models.Inspection{},
+		&models.ClinicRate{},
+		&models.Measure{},
+		&models.Medicine{},
+		&models.Recipe{},
 	)
 
 	// seeder

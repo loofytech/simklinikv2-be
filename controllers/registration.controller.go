@@ -217,6 +217,7 @@ func CreateRegistrationHandler(c *fiber.Ctx) error {
 		HistoryTreatment:       "",
 		AllergyMedicine:        "",
 		AllergyFood:            "",
+		IsSubmit:               "false",
 		ServiceActionId:        newSAct.ID,
 		PatientId:              dumpPatientId,
 		BodyDiabetes:           "0",

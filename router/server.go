@@ -220,5 +220,58 @@ func Server() {
 		router.Patch("", controllers.UpdateScreening)
 	})
 
+	micro.Route("/inspection", func(router fiber.Router) {
+		router.Get("", controllers.FindInspection)
+	})
+	micro.Route("/inspection/:inspectionId", func(router fiber.Router) {
+		router.Delete("", controllers.InspectionDelete)
+		router.Get("", controllers.FindInspectionById)
+		router.Patch("", controllers.UpdateInspection)
+	})
+
+	micro.Route("/clinic-rate", func(router fiber.Router) {
+		router.Get("", controllers.FindClinicRate)
+		router.Post("/create", controllers.CreateClinicRate)
+		router.Post("/", controllers.CreateClinicRate)
+	})
+	micro.Route("/clinic-rate/:clinicRateId", func(router fiber.Router) {
+		router.Delete("", controllers.ClinicRateDelete)
+		router.Get("", controllers.FindClinicRateById)
+		router.Patch("", controllers.UpdateClinicRate)
+	})
+
+	micro.Route("/measure", func(router fiber.Router) {
+		router.Get("", controllers.FindMeasure)
+		router.Post("/create", controllers.CreateMeasure)
+		router.Post("/", controllers.CreateMeasure)
+	})
+	micro.Route("/measure/:measureId", func(router fiber.Router) {
+		router.Delete("", controllers.MeasureDelete)
+		router.Get("", controllers.FindMeasureById)
+		router.Patch("", controllers.UpdateMeasure)
+	})
+
+	micro.Route("/medicine", func(router fiber.Router) {
+		router.Get("", controllers.FindMedicine)
+		router.Post("/create", controllers.CreateMedicine)
+		router.Post("/", controllers.CreateMedicine)
+	})
+	micro.Route("/medicine/:medicineId", func(router fiber.Router) {
+		router.Delete("", controllers.MedicineDelete)
+		router.Get("", controllers.FindMedicineById)
+		router.Patch("", controllers.UpdateMedicine)
+	})
+
+	micro.Route("/recipe", func(router fiber.Router) {
+		router.Get("", controllers.FindRecipe)
+		router.Post("/create", controllers.CreateRecipe)
+		router.Post("/", controllers.CreateRecipe)
+	})
+	micro.Route("/medicine/:medicineId", func(router fiber.Router) {
+		router.Delete("", controllers.RecipeDelete)
+		router.Get("", controllers.FindRecipeById)
+		router.Patch("", controllers.UpdateRecipe)
+	})
+
 	log.Fatal(app.Listen(":8000"))
 }

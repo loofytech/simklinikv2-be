@@ -130,3 +130,18 @@ func InspectionDelete(c *fiber.Ctx) error {
 
 	return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "error", "message": result.Error})
 }
+
+func FindInspectionById(c *fiber.Ctx) error {
+	inspectionId := c.Params("inspectionId")
+
+	var inspection models.Inspection
+	result := config.DB.First(&inspection, "id = ?", inspectionId)
+	if err := result.Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "fail", "message": "No Inspection with that Id exists"})
+		}
+		return c.Status(fiber.StatusBadGateway).JSON(fiber.Map{"status": "fail", "message": err.Error()})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{"status": "success", "data": inspection})
+}

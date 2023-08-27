@@ -44,6 +44,7 @@ type Screening struct {
 	HistoryTreatment       string        `gorm:"size:1000; not null" json:"history_treatment,omitempty"`
 	AllergyMedicine        string        `gorm:"size:1000; not null" json:"allergy_medicine,omitempty"`
 	AllergyFood            string        `gorm:"size:1000; not null" json:"allergy_food,omitempty"`
+	IsSubmit               string        `gorm:"size:10; not null" json:"is_submit,omitempty"`
 	ServiceActionId        int64         `gorm:"size:20; foreign_key" json:"service_action_id,omitempty"`
 	ServiceAction          ServiceAction `gorm:"references:id" json:"service_action"`
 	PatientId              int64         `gorm:"size:20; foreign_key" json:"patient_id,omitempty"`
@@ -86,6 +87,7 @@ type CreateScreeningSchema struct {
 	HistoryTreatment       string  `json:"history_treatment" validate:"required"`
 	AllergyMedicine        string  `json:"allergy_medicine" validate:"required"`
 	AllergyFood            string  `json:"allergy_food" validate:"required"`
+	IsSubmit               bool    `json:"is_submit" validate:"required"`
 	ServiceActionId        int64   `json:"service_action_id" validate:"required"`
 }
 
@@ -108,6 +110,7 @@ type UpdateScreeningSchema struct {
 	HistoryTreatment       string  `json:"history_treatment,omitempty"`
 	AllergyMedicine        string  `json:"allergy_medicine,omitempty"`
 	AllergyFood            string  `json:"allergy_food,omitempty"`
+	IsSubmit               bool    `json:"is_submit,omitempty"`
 	ServiceActionId        int64   `json:"service_action_id,omitempty"`
 	PatientId              int64   `json:"patient_id,omitempty"`
 }

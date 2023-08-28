@@ -157,11 +157,11 @@ func UpdateScreening(c *fiber.Ctx) error {
 		Abd:                 "",
 		Extremity:           "",
 		WorkingDiagnosis:    "",
-		Diagnosis:           "",
 		PhysicalExamination: "",
 		Explanation:         "",
 		AttachmentBefore:    "",
 		AttachmentAfter:     "",
+		DiagnoseId:          "",
 		ServiceActionId:     payload.ServiceActionId,
 	}
 

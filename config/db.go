@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"sim-klinikv2/models"
+	"sim-klinikv2/seeds"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -69,14 +70,19 @@ func ConnectDB(config *ConfigDB) {
 		&models.Recipe{},
 	)
 
-	// seeder
-	// seeds.CreateRoleSeeder(DB)
-	// seeds.CreateMaritalStatusSeeder(DB)
-	// seeds.CreateJobSeeder(DB)
-	// seeds.CreateEthnicSeeder(DB)
-	// seeds.CreateEducationSeeder(DB)
-	// seeds.CreateReligionSeeder(DB)
-	// seeds.CreatePaymentSeeder(DB)
+	//seeder
+	seeds.CreateRoleSeeder(DB)
+	seeds.CreateMaritalStatusSeeder(DB)
+	seeds.CreateJobSeeder(DB)
+	seeds.CreateEthnicSeeder(DB)
+	seeds.CreateEducationSeeder(DB)
+	seeds.CreateReligionSeeder(DB)
+	seeds.CreatePaymentSeeder(DB)
+	seeds.CreateServiceSeeder(DB)
+	seeds.CreateUnitSeeder(DB)
+	seeds.CreateUserSeeder(DB)
+	seeds.CreateMedicineSeeder(DB)
+	seeds.CreateDoctorScheduleSeeder(DB)
 
 	log.Println("🚀 Connected Successfully to the Database")
 }

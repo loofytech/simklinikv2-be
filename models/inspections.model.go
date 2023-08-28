@@ -18,12 +18,12 @@ type Inspection struct {
 	Abd                 string        `gorm:"size:50; not null" json:"abd,omitempty"`
 	Extremity           string        `gorm:"size:50; not null" json:"extremity,omitempty"`
 	WorkingDiagnosis    string        `gorm:"size:50; not null" json:"working_diagnosis,omitempty"`
-	Diagnosis           string        `gorm:"size:1000; not null" json:"diagnosis,omitempty"`
 	PhysicalExamination string        `gorm:"size:50; not null" json:"physical_examination,omitempty"`
 	Explanation         string        `gorm:"size:1000; not null" json:"explanation,omitempty"`
 	AttachmentBefore    string        `gorm:"size:50; not null" json:"attachment_before,omitempty"`
 	AttachmentAfter     string        `gorm:"size:50; not null" json:"attachment_after,omitempty"`
 	ServiceActionId     int64         `gorm:"size:20; foreign_key" json:"service_action_id,omitempty"`
+	DiagnoseId          string        `gorm:"size:50; is null" json:"diagnoses_id,omitempty"`
 	ServiceAction       ServiceAction `gorm:"references:id" json:"service_action"`
 	CreatedAt           time.Time     `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt           time.Time     `gorm:"" json:"updated_at,omitempty"`
@@ -55,7 +55,7 @@ type CreateInspectionSchema struct {
 	Abd                 string `json:"abd" validate:"required"`
 	Extremity           string `json:"extremity" validate:"required"`
 	WorkingDiagnosis    string `json:"working_diagnosis" validate:"required"`
-	Diagnosis           string `json:"diagnosis" validate:"required"`
+	DiagnoseId          string `json:"diagnoses_id" validate:"required"`
 	PhysicalExamination string `json:"physical_examination" validate:"required"`
 	Explanation         string `json:"explanation" validate:"required"`
 	AttachmentBefore    string `json:"attachment_before" validate:"required"`
@@ -74,7 +74,7 @@ type UpdateInspectionSchema struct {
 	Abd                 string `json:"abd,omitempty"`
 	Extremity           string `json:"extremity,omitempty"`
 	WorkingDiagnosis    string `json:"working_diagnosis,omitempty"`
-	Diagnosis           string `json:"diagnosis,omitempty"`
+	DiagnoseId          string `json:"diagnoses_id,omitempty"`
 	PhysicalExamination string `json:"physical_examination,omitempty"`
 	Explanation         string `json:"explanation,omitempty"`
 	AttachmentBefore    string `json:"attachment_before,omitempty"`

@@ -86,8 +86,8 @@ func UpdateInspection(c *fiber.Ctx) error {
 		updates["working_diagnosis"] = payload.WorkingDiagnosis
 	}
 
-	if payload.Diagnosis != "" {
-		updates["diagnosis"] = payload.Diagnosis
+	if payload.DiagnoseId != "" {
+		updates["diagnosis"] = payload.DiagnoseId
 	}
 
 	if payload.PhysicalExamination != "" {
